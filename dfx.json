@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "dfx": "0.9.3",
+  "canisters": {
+    "ic_portal_canisters": {
+      "type": "rust",
+      "package": "ic_portal_canisters",
+      "candid": "src/ic_portal_canisters/ic_portal_canisters.did"
+    },
+    "ic_portal_canisters_assets": {
+      "type": "assets",
+      "source": [
+        "src/ic_portal_canisters_assets/assets"
+      ],
+      "dependencies": [
+        "ic_portal_canisters"
+      ]
+    }
+  },
+  "defaults": {
+    "build": {
+      "packtool": "",
+      "args": ""
+    }
+  },
+  "networks": {
+    "local": {
+      "bind": "127.0.0.1:8000",
+      "type": "ephemeral"
+    }
+  }
+}
