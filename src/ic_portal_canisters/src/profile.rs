@@ -2,7 +2,7 @@ use candid::{Principal, CandidType};
 
 use anyhow::Result;
 use serde::*;
-use ic_ledger_types::*;
+use ic_ledger_types::{AccountIdentifier};
 use std::collections::HashMap;
 use std::cell::RefCell;
 thread_local! {
@@ -24,6 +24,7 @@ impl UserIndex {
 #[derive(PartialEq, Clone, Serialize, Deserialize, CandidType)]
 pub struct Profile {
     pub principal: Principal,
+    pub acount_id: String,
     pub tvl: u32,
     pub description: String,
     pub holders: u32,
@@ -62,12 +63,13 @@ impl Default for Profile {
     fn default() -> Self {
         Self { 
                  pid: Principal::anonymous(), 
-                 aid: "".into(), 
-                 nick_name: "".into(), 
+                 acount_id: "".into(), 
+                 tvl: 0u32, 
                  description: "".into(), 
-                 level: "".into(), 
-                 state: "".into(),
-                 email: "".into(),
+                 holders: 0u32, 
+                 followers: 0u32,
+                 holding: 0u32,
+                 qa_mod: QuesAns::default(),
             }
     }
 }
@@ -135,16 +137,3 @@ pub fn update(nickname: String, desc: String) -> Result<()> {
     Ok(())  
 }
 
-pub fn get() -> Option<Profile> {
-    let pid = ic_cdk::api::caller();
-    PROFILE.with(|profile|
-        profile.borrow().get(&pid).cloned()
-    )
-}
-
-pub fn get_url() -> Option<String> {
-    let pid = ic_cdk::api::caller();
-    PROFILE.with(|profile|
-        profile.borrow().get(&pid).and_then(|pro| Some(pro.get_url()))
-    )
-}
