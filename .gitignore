@@ -6,7 +6,7 @@ bin-release/
 target/
 # Other files and folders
 .settings/
-
+.vscode/
 # Executables
 *.swf
 *.air
