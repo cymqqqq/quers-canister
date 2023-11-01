@@ -23,21 +23,44 @@ impl UserIndex {
 }
 #[derive(PartialEq, Clone, Serialize, Deserialize, CandidType)]
 pub struct Profile {
-    pub url: String,
     pub principal: Principal,
     pub tvl: u32,
-    pub nick_name: String,
     pub description: String,
     pub holders: u32,
     pub followers: u32,
     pub holding: u32,
+    pub qa_mod: QuesAns,
 }
 
+#[derive(Default, Debug, Copy, Clone, Deserialize, CandidType)]
+pub struct QuesAns {
+    pub questions: Vec<String>,
+    pub answers: Vec<String>,
+}
+
+impl Default for QuesAns {
+    fn default() -> Self {
+        Self {
+            questions: Vec::new(),
+            answers: Vec::new(),
+        }
+    }
+}
+
+impl QuesAns {
+
+    pub fn get_all_questions_list(self) -> Vec<String> {
+        self.questions
+    }
+
+    pub fn get_all_answers_list(self) -> Vec<String> {
+        self.answers
+    }
+}
 
 impl Default for Profile {
     fn default() -> Self {
         Self { 
-                url: "".into(),
                  pid: Principal::anonymous(), 
                  aid: "".into(), 
                  nick_name: "".into(), 
@@ -49,48 +72,18 @@ impl Default for Profile {
     }
 }
 
+
 impl Profile {
     pub fn update_description(&mut self, desc: &String) {
         self.description = desc.into();
     }
 
-    pub fn update_url(&mut self, urlink: &String) {
-        self.url = urlink.into();
-    }
 
     pub fn update_profile_info(&mut self, nickname: &String, desc: &String) {
         self.nick_name = nickname.into();
         self.description = desc.into();
     }
 
-    pub fn get_url(&self) -> String {
-        self.url
-    }
-}
-
-pub fn register(
-        nick_name: &String,
-    ) -> Result<()>{
-
-        let pid = ic_cdk::api::caller();
-        let sub_acc = ic_ledger_types::Subaccount([0u8; 32]);
-        let aid = AccountIdentifier::new(&pid, &sub_acc);
-        
-        let profile_ = Profile {
-            url: "".into(),
-            pid: pid,
-            aid: aid.to_string(),
-            nick_name: nick_name.into(),
-            description: "".into(),
-            level: "".into(),
-            state: "".into(),
-            email: "".into(),
-        };
-        PROFILE.with(|profile| {
-
-            profile.borrow_mut().insert(pid, profile_)
-        });
-    Ok(())      
 }
 
 pub fn get_all() -> Vec<Profile> {
@@ -103,17 +96,6 @@ pub fn get_all() -> Vec<Profile> {
 
 }
 
-
-pub fn get_all_emails() -> Vec<(String, String)> {
-    let mut profile_vec = Vec::new();
-    PROFILE.with(|profile| {
-        profile.borrow()
-        .iter()
-        .for_each(|(_, i)| profile_vec.push((i.nick_name.clone(), i.email.clone())));
-        profile_vec
-
-    })
-}
 
 pub fn get_specific(pid: Principal) -> Option<Profile> {
     PROFILE.with(|profile|

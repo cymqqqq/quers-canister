@@ -7,12 +7,6 @@ use candid::{CandidType, candid_method};
 
 use ic_ledger_types::{AccountIdentifier};
 
-#[update]
-#[candid_method(update)]
-async fn register_profile(nick_name: String) {
-    register(nick_name);
-}
-
 //To set description of the current user
 #[update]
 #[candid_method(update)]
