@@ -18,3 +18,4 @@ serde_json = "1.0.105"
 ic-cdk-optimizer = "0.3.4"
 num-traits = "0.2.14"
 anyhow = "1.0"
+canister_library= { path="../../canister_library" }

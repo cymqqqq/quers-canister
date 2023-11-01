@@ -153,7 +153,7 @@ pub fn get_specific(pid: Principal) -> Option<Profile> {
     )
 }
 
-pub fn set_description(desc: String) -> Result<()> {
+pub fn update_description(desc: String) -> Result<()> {
     let pid = ic_cdk::api::caller();
 
     PROFILE.with(|profile| 
