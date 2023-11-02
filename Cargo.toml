@@ -6,3 +6,4 @@ members = [
 
 [workspace.dependencies]
 rand = "0.8.5"
+ic-cdk = "0.10.0"
