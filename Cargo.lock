@@ -145,6 +145,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "candid_gen"
+version = "0.1.0"
+dependencies = [
+ "quote",
+ "syn 2.0.38",
+]
+
+[[package]]
 name = "canister_library"
 version = "0.1.0"
 
