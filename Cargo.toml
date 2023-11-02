@@ -3,3 +3,6 @@ members = [
     "src/ic_portal_canisters",
     "src/canister_library",
 ]
+
+[workspace.dependencies]
+rand = "0.8.5"
