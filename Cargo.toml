@@ -1,6 +1,6 @@
 [workspace]
 members = [
-    "src/ic_portal_canisters",
+    "src/user",
     "src/canister_library",
 ]
 

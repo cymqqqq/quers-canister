@@ -484,25 +484,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "576c539151d4769fb4d1a0c25c4108dd18facd04c5695b02cf2d226ab4e43aa5"
 
 [[package]]
-name = "ic_portal_canisters"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "candid",
- "canister_library",
- "ic-cdk",
- "ic-cdk-macros",
- "ic-cdk-optimizer",
- "ic-cdk-timers",
- "ic-ledger-types",
- "num-traits",
- "serde",
- "serde_bytes",
- "serde_cbor",
- "serde_json",
-]
-
-[[package]]
 name = "indexmap"
 version = "1.9.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -926,6 +907,25 @@ name = "unicode-width"
 version = "0.1.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "3ed742d4ea2bd1176e236172c8429aaf54486e7ac098db29ffe6529e0ce50973"
+
+[[package]]
+name = "user"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "candid",
+ "canister_library",
+ "ic-cdk",
+ "ic-cdk-macros",
+ "ic-cdk-optimizer",
+ "ic-cdk-timers",
+ "ic-ledger-types",
+ "num-traits",
+ "serde",
+ "serde_bytes",
+ "serde_cbor",
+ "serde_json",
+]
 
 [[package]]
 name = "vec_map"
