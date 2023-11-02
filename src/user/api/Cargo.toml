@@ -11,4 +11,3 @@ candid_gen = { path = "../../candid_gen" }
 ic-ledger-types = { workspace = true }
 serde = { workspace = true }
 serde_bytes = { workspace = true }
-types = { path = "../../utils/env" }
