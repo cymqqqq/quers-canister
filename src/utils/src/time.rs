@@ -1,7 +1,6 @@
-use env::{
+use crate::env::{
     Milliseconds, TimestampMillis, TimestampNanos,
-}
-
+};
 
 pub const SECOND_IN_MS: Milliseconds = 1000;
 pub const MINUTE_IN_MS: Milliseconds = SECOND_IN_MS * 60;

@@ -1,11 +1,12 @@
 {
   "version": 1,
-  "dfx": "0.9.3",
+  "dfx": "0.14.3",
   "canisters": {
-    "ic_portal_canisters": {
-      "type": "rust",
-      "package": "ic_portal_canisters",
-      "candid": "src/ic_portal_canisters/ic_portal_canisters.did"
+    "user": {
+      "type": "custom",
+      "candid": "src/user/api/user.did",
+      "wasm": "wasms/user.wasm.gz",
+      "build": "sudo bash ./scripts/generate_wasm.sh user"
     },
     "ic_portal_canisters_assets": {
       "type": "assets",

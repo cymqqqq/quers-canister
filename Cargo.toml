@@ -1,8 +1,10 @@
 [workspace]
 members = [
-    "src/user",
+    "src/user/api",
+    "src/user/impl",
     "src/canister_library",
     "src/candid_gen",
+    "src/utils"
 ]
 
 [workspace.dependencies]
@@ -15,3 +17,11 @@ serde_json = "1.0.105"
 proc-macro2 = "1.0.66"
 syn = "2.0.29"
 quote = "1.0.33"
+candid = "0.9.3"
+ic-cdk-macros = "0.7.0"
+ic-cdk-timers = "0.4.0"
+ic-ledger-types = "0.7.0"
+ic-cdk-optimizer = "0.3.4"
+num-traits = "0.2.14"
+getrandom = "0.2.10"
+anyhow = "1.0.0"

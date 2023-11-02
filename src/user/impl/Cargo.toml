@@ -1,0 +1,27 @@
+[package]
+name = "user_canister_impl"
+version = "0.1.0"
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+path = "src/lib.rs"
+crate-type = ["cdylib"]
+
+[dependencies]
+candid = { workspace = true }
+ic-cdk = {workspace = true }
+ic-cdk-macros = { workspace = true }
+ic-cdk-timers = { workspace = true }
+ic-ledger-types = { workspace = true }
+serde = { workspace = true }
+serde_bytes = { workspace = true }
+serde_cbor = { workspace = true }
+serde_json = { workspace = true }
+ic-cdk-optimizer = { workspace = true }
+num-traits = { workspace = true }
+canister_library= { path="../../canister_library" }
+utils = {path = "../../utils"}
+anyhow = { workspace = true }
+user_canister = {path = "../api" }

@@ -6,3 +6,5 @@ edition = "2021"
 [dependencies]
 rand = { workspace = true }
 ic-cdk = { workspace = true }
+candid = {workspace = true }
+getrandom = { workspace = true, features = ["custom"] }

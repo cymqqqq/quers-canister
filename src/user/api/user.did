@@ -1,0 +1,3 @@
+type Args = record { description : text };
+type Response = variant { DescriptionInvalid; Success };
+service : { update_profile_description : (Args) -> (Response) }

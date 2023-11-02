@@ -11,7 +11,7 @@ thread_local! {
 
 }
 
-#[derive(Clone, CandidType, Deserialize)]
+#[derive(Debug, Clone, CandidType, Deserialize, Serialize)]
 pub struct UserIndex {
     pub profile: HashMap<Principal, Profile>,
 }
@@ -20,8 +20,15 @@ impl UserIndex {
     pub fn new() -> Self {
         Self { profile: HashMap::new(), }
     }
+
+    pub fn get_user_profile(&self, principal: &Principal) -> Profile {
+        match self.profile.get(principal) {
+            Some(profile) => profile.clone(),
+            None => Profile::default(),
+        }
+    }
 }
-#[derive(PartialEq, Clone, Serialize, Deserialize, CandidType)]
+#[derive(Debug, Clone, Serialize, Deserialize, CandidType)]
 pub struct Profile {
     pub principal: Principal,
     pub acount_id: String,
@@ -33,7 +40,7 @@ pub struct Profile {
     pub qa_mod: QuesAns,
 }
 
-#[derive(Default, Debug, Copy, Clone, Deserialize, CandidType)]
+#[derive(Debug, Clone, Deserialize, CandidType, Serialize)]
 pub struct QuesAns {
     pub questions: Vec<String>,
     pub answers: Vec<String>,
@@ -71,7 +78,7 @@ impl QuesAns {
 impl Default for Profile {
     fn default() -> Self {
         Self { 
-                 pid: Principal::anonymous(), 
+                 principal: Principal::anonymous(), 
                  acount_id: "".into(), 
                  tvl: 0u32, 
                  description: "".into(), 
@@ -114,8 +121,10 @@ impl Profile {
         self.qa_mod.add_profile_answer(answer);
     }
     // query method
+
+
     pub fn get_profile_description(&self) -> String {
-        self.description.into()
+        self.description.clone()
     }
 
     pub fn get_profile_tvl(&self) -> u32 {
@@ -135,43 +144,6 @@ impl Profile {
     }
 }
 
-pub fn get_all() -> Vec<Profile> {
-    PROFILE.with(|profile|
-        profile.borrow()
-        .values()
-        .cloned()
-        .collect::<Vec<Profile>>()
-    )
-
-}
 
 
-pub fn get_specific(pid: Principal) -> Option<Profile> {
-    PROFILE.with(|profile|
-        profile.borrow().get(&pid).cloned()
-
-    )
-}
-
-pub fn update_description(desc: String) -> Result<()> {
-    let pid = ic_cdk::api::caller();
-
-    PROFILE.with(|profile| 
-        {profile.borrow_mut().get_mut(&pid).and_then(|pro| Some(pro.update_description(desc)))}
-        
-    );
-    Ok(())
-}
-
-    
-pub fn update(nickname: String, desc: String) -> Result<()> {
-    let pid = ic_cdk::api::caller();
-
-    PROFILE.with(|profile|
-        {
-            profile.borrow_mut().get_mut(&pid).and_then(|pro| Some(pro.update_profile_info(nickname, desc)))
-        }
-    );
-    Ok(())  
-}
 
