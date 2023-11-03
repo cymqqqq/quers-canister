@@ -1,6 +1,6 @@
 use canister_library::canister_state;
 use crate::model::profile::UserIndex;
-// use candid::Principal;
+use candid::Principal;
 use serde::{Deserialize, Serialize};
 // use std::cell::RefCell;
 // use std::collections::{HashMap, HashSet};
@@ -41,5 +41,13 @@ impl Data {
         Self {
             users: UserIndex::new(),
         }
+    }
+
+    pub fn set_user_principal(&mut self, owner: &Principal) {
+        self.users.set_user_principal(&owner);
+    }
+
+    pub fn update_user_description(&mut self, owner: &Principal, description: &String) {
+        self.users.update_user_description(&owner, &description);
     }
 }

@@ -11,7 +11,7 @@ fn set_user_principal(args: Args) -> Response {
 
 fn set_user_principal_impl(args: &Args, state: &mut RuntimeState) -> Response {
     // let caller = state.env.caller();
-    state.data.users.set_user_principal(&args.owner);
+    state.data.set_user_principal(&args.owner);
     // profile.update_profile_description(&args.description);
     Response::Success
 }

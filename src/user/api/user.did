@@ -1,6 +1,6 @@
 type Args = record { owner : principal };
 type Args_1 = record { owner : principal };
-type Args_2 = record { description : text };
+type Args_2 = record { owner : principal; description : text };
 type Profile = record {
   tvl : nat32;
   owner : principal;

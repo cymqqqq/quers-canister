@@ -1,4 +1,4 @@
-use crate::{mutate_state, RuntimeState};
+use crate::{mutate_state, replace_state, RuntimeState};
 use crate::guards::caller_is_quers_user;
 use ic_cdk_macros::update;
 use user_canister::update_profile_description::{Args, Response::*,*};
@@ -10,8 +10,6 @@ fn update_profile_description(args: Args) -> Response {
 }
 
 fn update_profile_description_impl(args: &Args, state: &mut RuntimeState) -> Response {
-    let caller = state.env.caller();
-    let mut profile = state.data.users.get_user_profile(&caller);
-    profile.update_profile_description(&args.description);
+    state.data.update_user_description(&args.owner, &args.description);
     Response::Success
 }
