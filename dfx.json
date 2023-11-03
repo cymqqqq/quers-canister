@@ -7,15 +7,6 @@
       "candid": "src/user/api/user.did",
       "wasm": "wasms/user.wasm.gz",
       "build": "sudo bash ./scripts/generate_wasm.sh user"
-    },
-    "ic_portal_canisters_assets": {
-      "type": "assets",
-      "source": [
-        "src/ic_portal_canisters_assets/assets"
-      ],
-      "dependencies": [
-        "ic_portal_canisters"
-      ]
     }
   },
   "defaults": {
