@@ -1,3 +1,9 @@
-type Args = record { description : text };
-type Response = variant { DescriptionInvalid; Success };
-service : { update_profile_description : (Args) -> (Response) }
+type Args = record { owner : principal };
+type Args_1 = record { description : text };
+type Response = variant { Success : SuccessResult };
+type Response_1 = variant { DescriptionInvalid; Success };
+type SuccessResult = record { "principal" : principal };
+service : {
+  init_state : (Args) -> (Response) query;
+  update_profile_description : (Args_1) -> (Response_1);
+}
