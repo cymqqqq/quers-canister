@@ -6,10 +6,10 @@ use serde::{Deserialize, Serialize};
 // use std::collections::{HashMap, HashSet};
 use utils::env::Environment;
 // use utils::time::DAY_IN_MS;
-
+mod lifecycle;
 mod guards;
 mod model;
-// mod queries;
+mod queries;
 mod updates;
 
 canister_state!(RuntimeState);

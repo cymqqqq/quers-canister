@@ -5,11 +5,10 @@ use serde::*;
 use ic_ledger_types::{AccountIdentifier};
 use std::collections::HashMap;
 use std::cell::RefCell;
-thread_local! {
-    static PROFILE: RefCell<UserIndex>  = RefCell::new(UserIndex::new());
-    // static PROFILE_LIST: RefCell<Vec<Profile>> = RefCell::new(Vec::new());
+// thread_local! {
+//     static PROFILE: RefCell<UserIndex>  = RefCell::new(UserIndex::new());
 
-}
+// }
 
 #[derive(Debug, Clone, CandidType, Deserialize, Serialize)]
 pub struct UserIndex {
@@ -93,6 +92,9 @@ impl Default for Profile {
 
 impl Profile {
     // update method
+    pub fn set_user_principal(&mut self, principal: &Principal) {
+        self.principal = *principal;
+    }
     pub fn update_profile_description(&mut self, desc: &String) {
         self.description = desc.into();
     }
