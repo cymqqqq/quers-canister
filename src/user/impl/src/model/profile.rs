@@ -70,6 +70,14 @@ impl UserIndex {
         self.profile.insert(*owner, profile_map);
     }
 
+    pub fn update_user_holding(&mut self, owner: &Principal, holding: &u32) {
+        let mut profile_map = match self.profile.get_mut(owner) {
+            Some(profile) => profile.clone(),
+            None => Profile::default(),
+        };
+        profile_map.update_profile_holding(holding);
+        self.profile.insert(*owner, profile_map);
+    }
     
 }
 

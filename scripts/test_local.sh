@@ -14,3 +14,7 @@ dfx canister call user get_user_profile "(record {owner=principal \"$owner\";})"
 
 dfx canister call user update_user_followers "(record {owner=principal \"$owner\"; followers=12;})"
 dfx canister call user get_user_profile "(record {owner=principal \"$owner\";})"
+
+
+dfx canister call user update_user_holding "(record {owner=principal \"$owner\"; holding=12;})"
+dfx canister call user get_user_profile "(record {owner=principal \"$owner\";})"

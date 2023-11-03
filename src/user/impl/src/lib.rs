@@ -61,5 +61,9 @@ impl Data {
     pub fn update_user_followers(&mut self, owner: &Principal, followers: &u32) {
         self.users.update_user_followers(&owner, &followers);
     }
+
+    pub fn update_user_holding(&mut self, owner: &Principal, holding: &u32) {
+        self.users.update_user_holding(&owner, &holding);
+    }
     
 }
