@@ -54,5 +54,12 @@ impl Data {
     pub fn update_user_tvl(&mut self, owner: &Principal, tvl: &u32) {
         self.users.update_user_tvl(&owner, &tvl);
     }
+    pub fn update_user_holders(&mut self, owner: &Principal, holders: &u32) {
+        self.users.update_user_holders(&owner, &holders);
+    }
+
+    pub fn update_user_followers(&mut self, owner: &Principal, followers: &u32) {
+        self.users.update_user_followers(&owner, &followers);
+    }
     
 }

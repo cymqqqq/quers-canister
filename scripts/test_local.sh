@@ -8,3 +8,9 @@ dfx canister call user get_user_profile "(record {owner=principal \"$owner\";})"
 
 dfx canister call user update_user_tvl "(record {owner=principal \"$owner\"; tvl=12;})"
 dfx canister call user get_user_profile "(record {owner=principal \"$owner\";})"
+
+dfx canister call user update_user_holders "(record {owner=principal \"$owner\"; holders=12;})"
+dfx canister call user get_user_profile "(record {owner=principal \"$owner\";})"
+
+dfx canister call user update_user_followers "(record {owner=principal \"$owner\"; followers=12;})"
+dfx canister call user get_user_profile "(record {owner=principal \"$owner\";})"

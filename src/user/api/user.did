@@ -1,7 +1,9 @@
 type Args = record { owner : principal };
 type Args_1 = record { owner : principal };
 type Args_2 = record { owner : principal; description : text };
-type Args_3 = record { tvl : nat32; owner : principal };
+type Args_3 = record { owner : principal; followers : nat32 };
+type Args_4 = record { owner : principal; holders : nat32 };
+type Args_5 = record { tvl : nat32; owner : principal };
 type Profile = record {
   tvl : nat32;
   owner : principal;
@@ -17,7 +19,9 @@ type Response = variant { Success : SuccessResult };
 type Response_1 = variant { Success : SuccessResult_1 };
 type Response_2 = variant { Success; PrincipalInvalid };
 type Response_3 = variant { DescriptionInvalid; Success };
-type Response_4 = variant { TvlInvalid; Success };
+type Response_4 = variant { Success; HoldersInvalid };
+type Response_5 = variant { Success; HoldersInvalid };
+type Response_6 = variant { TvlInvalid; Success };
 type SuccessResult = record { profile : Profile };
 type SuccessResult_1 = record { "principal" : principal };
 service : {
@@ -25,5 +29,7 @@ service : {
   init_state : (Args_1) -> (Response_1) query;
   set_user_principal : (Args_1) -> (Response_2);
   update_profile_description : (Args_2) -> (Response_3);
-  update_user_tvl : (Args_3) -> (Response_4);
+  update_user_followers : (Args_3) -> (Response_4);
+  update_user_holders : (Args_4) -> (Response_5);
+  update_user_tvl : (Args_5) -> (Response_6);
 }
