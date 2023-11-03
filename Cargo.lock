@@ -972,6 +972,7 @@ dependencies = [
  "ic-ledger-types",
  "serde",
  "serde_bytes",
+ "utils",
 ]
 
 [[package]]
@@ -1003,6 +1004,7 @@ dependencies = [
  "getrandom",
  "ic-cdk",
  "rand",
+ "serde",
 ]
 
 [[package]]

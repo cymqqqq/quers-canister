@@ -4,6 +4,8 @@ use candid_gen::generate_candid_method;
 fn main() {
     generate_candid_method!(user, init_state, query);
     generate_candid_method!(user, get_user_profile, query);
+
+    generate_candid_method!(user, update_user_tvl, update);
     generate_candid_method!(user, set_user_principal, update);
     generate_candid_method!(user, update_profile_description, update);
 

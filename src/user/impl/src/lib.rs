@@ -50,4 +50,9 @@ impl Data {
     pub fn update_user_description(&mut self, owner: &Principal, description: &String) {
         self.users.update_user_description(&owner, &description);
     }
+
+    pub fn update_user_tvl(&mut self, owner: &Principal, tvl: &u32) {
+        self.users.update_user_tvl(&owner, &tvl);
+    }
+    
 }
