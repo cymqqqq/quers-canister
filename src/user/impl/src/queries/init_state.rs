@@ -1,7 +1,8 @@
 use crate::{mutate_state, RuntimeState};
 use ic_cdk_macros::query;
 use user_canister::init_state::{Response::*, *};
-use crate::model::profile::Profile;
+// use crate::model::profile::Profile;
+use utils::types::*;
 #[query]
 fn init_state(args: Args) -> Response {
     mutate_state(|state| 

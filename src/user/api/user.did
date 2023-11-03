@@ -1,9 +1,26 @@
 type Args = record { owner : principal };
-type Args_1 = record { description : text };
+type Args_1 = record { owner : principal };
+type Args_2 = record { description : text };
+type Profile = record {
+  tvl : nat32;
+  owner : principal;
+  qa_mod : QuesAns;
+  description : text;
+  acount_id : text;
+  holders : nat32;
+  holding : nat32;
+  followers : nat32;
+};
+type QuesAns = record { answers : vec text; questions : vec text };
 type Response = variant { Success : SuccessResult };
-type Response_1 = variant { DescriptionInvalid; Success };
-type SuccessResult = record { "principal" : principal };
+type Response_1 = variant { Success : SuccessResult_1 };
+type Response_2 = variant { Success; PrincipalInvalid };
+type Response_3 = variant { DescriptionInvalid; Success };
+type SuccessResult = record { profile : Profile };
+type SuccessResult_1 = record { "principal" : principal };
 service : {
-  init_state : (Args) -> (Response) query;
-  update_profile_description : (Args_1) -> (Response_1);
+  get_user_profile : (Args) -> (Response) query;
+  init_state : (Args_1) -> (Response_1) query;
+  set_user_principal : (Args_1) -> (Response_2);
+  update_profile_description : (Args_2) -> (Response_3);
 }
