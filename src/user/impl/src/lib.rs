@@ -121,3 +121,67 @@ impl Data {
         self.answer.get_all_commet_list()
     }
 }
+
+
+
+// pub fn view_event() -> Option<(i32, Vec<Events>)> {
+//     Some(EVENTS.with(|events|
+//         (events.borrow().len() as i32, events.clone().borrow().to_vec())
+//     ))
+// }
+
+// pub fn view_level_one() -> Vec<Events> {
+//     LEVEL_ONE_EVENTS.with(|events|
+//         {
+//             let v = events.clone().into_inner();
+//             let i = std::cmp::min(v.len(), NUM_OF_TOP);
+//             let mut v_rev = v[..i].to_vec();
+//             v_rev.reverse();
+//             v_rev
+            
+//         }
+//     )
+// }
+
+// pub fn view_by_id(id: String) -> Option<Events> {
+//     EVENTS.with(|events|
+//         {
+//             events.clone()
+//                     .into_inner()
+//                     .iter()
+//                     .find(|&e| e.event_id == id)
+//                     .cloned()
+//         }
+//     )
+// }
+
+// pub fn view_yesterday(page: usize , num_of_page: Option<usize>) -> (i32, Vec<Events>) {
+//     assert!(page > 0);
+
+//     let num_of_page = num_of_page.unwrap_or(NUM_OF_PAGE);
+//     EVENTS.with(|events| {
+//         let v = events.clone().into_inner();
+//         let start = (page - 1) * num_of_page;
+//         let end = std::cmp::min(v.len(), page * num_of_page);
+//         assert!(start < end);
+//         let mut v_rev = v[start..end].to_vec();
+//         v_rev.reverse();
+//         (v[start..end].len() as i32, v_rev)
+//     })
+// }
+
+// pub fn view_today(page: usize , num_of_page: Option<usize>) -> (i32, Vec<Events>) {
+//     assert!(page > 0);
+
+//     let num_of_page = num_of_page.unwrap_or(NUM_OF_PAGE);
+//     EVENTS.with(|events| {
+//         let v = events.clone().into_inner();
+//         let start = (page - 1) * num_of_page;
+//         let end = std::cmp::min(v.len(), page * num_of_page);
+//         assert!(start < end);
+
+//         let mut v_rev = v[start..end].to_vec();
+//         v_rev.reverse();
+//         (v[start..end].len() as i32, v_rev)
+//     })
+// }

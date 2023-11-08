@@ -1,6 +1,8 @@
 {
   "ic_portal_canisters": {
     "ic": "g3aq3-pqaaa-aaaah-abnvq-cai"
+  },
+  "ic_event_canister": {
+    "ic": "ay5ri-saaaa-aaaah-abgsa-cai"
   }
- 
 }
