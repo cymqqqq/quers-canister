@@ -94,31 +94,50 @@ impl Data {
         );
     }
 
-    pub fn add_answer(&mut self,
-        answer_pid: &Principal,
-        answer_content: String,
-    ) {
-        let answer = Answer::new(
-            answer_content,
-            *answer_pid,
-        );
-        self.question.answer_question(*answer_pid, answer);
+    pub fn get_question_by_id(&self, question_id: &String) -> Question {
+        let question = match self.homepage.get_question_by_id(question_id) {
+            Some(question_internal) => question_internal.clone(),
+            None => Question::default(),
+        };
+        question
     }
 
-    pub fn get_all_answers_list(&self) -> Vec<Answer> {
-        self.question.get_all_answers_list()
+    
+
+    pub fn add_answer(&mut self,
+        question_id: &String,
+        answer_pid: &Principal,
+        answer_content: &String,
+    ) {
+        let mut question = self.get_question_by_id(&question_id);
+
+        let answer = Answer::new(
+            answer_content.to_string(),
+            *answer_pid,
+        );
+        question.answer_question(*answer_pid, answer);
+        self.homepage.update_question_by_id(&question_id, &question);
+    }
+
+    pub fn get_all_answers_list_by_question_id(&self, question_id: &String) -> Vec<Answer> {
+        self.get_question_by_id(&question_id).get_all_answers_list()
     }
     
     pub fn add_comment(&mut self,
+            answer_pid: &Principal,
             comment_pid: &Principal,
-            coment_content: String
+            comment_content: &String
     ) {
-        let new_comment = Comment::new(*comment_pid, coment_content);
-        self.answer.add_comment(*comment_pid, new_comment);
+        let mut answer = match self.question.get_answer_by_principal(&answer_pid) {
+            Some(answer_internal) => answer_internal.clone(),
+            None => Answer::default(),
+        };
+        let new_comment = Comment::new(*comment_pid, comment_content.to_string());
+        answer.add_comment(*comment_pid, new_comment);
     }
 
-    pub fn get_all_commet_list(&self) -> Vec<Comment> {
-        self.answer.get_all_commet_list()
+    pub fn get_all_comment_list(&self) -> Vec<Comment> {
+        self.answer.get_all_comment_list()
     }
 }
 

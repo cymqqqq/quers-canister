@@ -91,6 +91,18 @@ impl HomePage {
     pub fn get_all_question_list(&self) -> Vec<Question> {
         self.question_list.values().cloned().collect()
     }
+
+    pub fn get_question_by_id(&self, question_id: &String) -> Option<&Question> {
+        self.question_list.get(question_id)
+    }
+
+    pub fn update_question_by_id(&mut self, 
+                question_id: &String,
+                question: &Question
+    )
+    {
+        self.question_list.insert(question_id.to_string(), question.clone());
+    }
 }
 
 #[derive(Debug, Clone, CandidType, Serialize, Deserialize)]
@@ -155,6 +167,10 @@ impl Question {
         self.answers.insert(aq_pid, answer);
     }
 
+    pub fn get_answer_by_principal(&self, principal: &Principal) -> Option<&Answer> {
+        self.answers.get(principal)
+    }
+
     pub fn get_all_answers_list(&self) -> Vec<Answer> {
         self.answers.values().cloned().collect()
     }
@@ -208,7 +224,7 @@ impl Answer {
         self.comments.insert(commenter, comment);
     }
 
-    pub fn get_all_commet_list(&self) -> Vec<Comment> {
+    pub fn get_all_comment_list(&self) -> Vec<Comment> {
         self.comments.values().cloned().collect()
     }
 }

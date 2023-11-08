@@ -5,3 +5,5 @@ pub mod update_user_followers;
 pub mod update_user_holders;
 pub mod update_user_holding;
 pub mod add_new_question;
+pub mod add_new_answer;
+pub mod add_new_comment;

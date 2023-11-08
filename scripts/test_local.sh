@@ -31,6 +31,8 @@ tags=vec {\"ETH\"}; \
 question_image=opt \"\"; \
 }"
 
+# dfx canister call 
+
 dfx canister call user get_all_question_list "record {}"
 
 dfx stop

@@ -14,7 +14,13 @@ fn main() {
     generate_candid_method!(user, update_profile_description, update);
 
     generate_candid_method!(user, add_new_question, update);
+    generate_candid_method!(user, get_question_by_id, query);
     generate_candid_method!(user, get_all_question_list, query);
+
+    generate_candid_method!(user, add_new_answer, update);
+    generate_candid_method!(user, get_all_answers_list_by_question_id, query);
+
+    generate_candid_method!(user, add_new_comment, update);
     candid::export_service!();
     std::print!("{}", __export_service());
 }
