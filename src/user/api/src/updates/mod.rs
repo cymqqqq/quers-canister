@@ -4,3 +4,4 @@ pub mod update_user_tvl;
 pub mod update_user_holders;
 pub mod update_user_followers;
 pub mod update_user_holding;
+pub mod add_new_question;

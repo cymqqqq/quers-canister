@@ -78,12 +78,12 @@ impl Data {
     }
 
     pub fn add_question(&mut self,
-        question_logo: Option<String>,
-        question_title: String,
-        question_description: String,
-        question_image: Option<String>,
-        question_asker: Principal,
-        tags: Vec<String>,
+        question_logo: &Option<String>,
+        question_title: &String,
+        question_description: &String,
+        question_image: &Option<String>,
+        question_asker: &Principal,
+        tags: &Vec<String>,
     ) {
         self.homepage.ask_question(question_logo,
             question_title,

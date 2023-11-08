@@ -6,6 +6,8 @@ use crate::env::{
     TimestampNanos,
 };
 use crate::time::{now_nanos};
+#[derive(CandidType, Serialize, Deserialize, Clone, Debug, Default)]
+pub struct Empty {}
 
 static QID: AtomicU16 = AtomicU16::new(0);
 // generate new question id
@@ -63,22 +65,24 @@ impl Default for HomePage {
 
 impl HomePage {
     pub fn ask_question(&mut self, 
-        question_logo: Option<String>,
-        question_title: String,
-        question_description: String,
-        question_image: Option<String>,
-        question_asker: Principal,
-        tags: Vec<String>,
+        question_logo: &Option<String>,
+        question_title: &String,
+        question_description: &String,
+        question_image: &Option<String>,
+        question_asker: &Principal,
+        tags: &Vec<String>,
     ) {
         let q_id = new_qid();
         let question_obj = Question::new(
             &q_id,
-            question_title,
-                question_description,
-                question_logo,
-                question_image,
-                question_asker,
-                tags,
+            question_title.to_string(),
+                question_description.to_string(),
+                question_logo.clone(),
+                question_image.clone(),
+                *question_asker,
+                tags.to_vec(
+
+                ),
         );
         self.question_list.insert(q_id, question_obj);
 

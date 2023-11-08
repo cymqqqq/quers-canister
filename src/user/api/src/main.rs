@@ -13,6 +13,8 @@ fn main() {
     generate_candid_method!(user, set_user_principal, update);
     generate_candid_method!(user, update_profile_description, update);
 
+    generate_candid_method!(user, add_new_question, update);
+    generate_candid_method!(user, get_all_question_list, query);
     candid::export_service!();
     std::print!("{}", __export_service());
 }
