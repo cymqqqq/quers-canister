@@ -21,6 +21,7 @@ fn main() {
     generate_candid_method!(user, get_all_answers_list_by_question_id, query);
 
     generate_candid_method!(user, add_new_comment, update);
+    generate_candid_method!(user, get_all_comment_list, query);
     candid::export_service!();
     std::print!("{}", __export_service());
 }

@@ -136,8 +136,15 @@ impl Data {
         answer.add_comment(*comment_pid, new_comment);
     }
 
-    pub fn get_all_comment_list(&self) -> Vec<Comment> {
-        self.answer.get_all_comment_list()
+    pub fn get_all_comment_list(&self, 
+        answer_pid: &Principal) -> Vec<Comment> {
+
+        let answer= match self.question.get_answer_by_principal(&answer_pid)  
+        {
+            Some(answer_internal) => answer_internal.clone(),
+            None => Answer::default(),
+        };
+        answer.get_all_comment_list()
     }
 }
 
