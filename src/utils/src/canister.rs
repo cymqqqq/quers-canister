@@ -22,6 +22,7 @@ impl CanisterEnv {
 }
 
 impl Environment for CanisterEnv {
+
     fn now_nanos(&self) -> TimestampNanos {
         time::now_nanos()
     }

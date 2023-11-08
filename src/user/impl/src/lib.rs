@@ -5,6 +5,7 @@ use serde::{Deserialize, Serialize};
 // use std::cell::RefCell;
 // use std::collections::{HashMap, HashSet};
 use utils::env::Environment;
+use utils::types::*;
 // use utils::time::DAY_IN_MS;
 pub mod lifecycle;
 pub mod guards;
@@ -33,6 +34,9 @@ impl RuntimeState {
 #[derive(Serialize, Deserialize)]
 struct Data {
     pub users: UserIndex,
+    pub homepage: HomePage,
+    pub question: Question,
+    pub answer: Answer,
 }
 
 
@@ -40,6 +44,9 @@ impl Data {
     pub fn new() -> Self {
         Self {
             users: UserIndex::new(),
+            homepage: HomePage::default(),
+            question: Question::default(),
+            answer: Answer::default(),
         }
     }
 
@@ -65,5 +72,52 @@ impl Data {
     pub fn update_user_holding(&mut self, owner: &Principal, holding: &u32) {
         self.users.update_user_holding(&owner, &holding);
     }
+
+    pub fn get_all_question_list(&self) -> Vec<Question> {
+        self.homepage.get_all_question_list()
+    }
+
+    pub fn add_question(&mut self,
+        question_logo: Option<String>,
+        question_title: String,
+        question_description: String,
+        question_image: Option<String>,
+        question_asker: Principal,
+        tags: Vec<String>,
+    ) {
+        self.homepage.ask_question(question_logo,
+            question_title,
+            question_description,
+            question_image,
+            question_asker,
+            tags
+        );
+    }
+
+    pub fn add_answer(&mut self,
+        answer_pid: &Principal,
+        answer_content: String,
+    ) {
+        let answer = Answer::new(
+            answer_content,
+            *answer_pid,
+        );
+        self.question.answer_question(*answer_pid, answer);
+    }
+
+    pub fn get_all_answers_list(&self) -> Vec<Answer> {
+        self.question.get_all_answers_list()
+    }
     
+    pub fn add_comment(&mut self,
+            comment_pid: &Principal,
+            coment_content: String
+    ) {
+        let new_comment = Comment::new(*comment_pid, coment_content);
+        self.answer.add_comment(*comment_pid, new_comment);
+    }
+
+    pub fn get_all_commet_list(&self) -> Vec<Comment> {
+        self.answer.get_all_commet_list()
+    }
 }
