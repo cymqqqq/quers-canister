@@ -38,7 +38,7 @@ fn new_cid() -> String {
 
 #[derive(Debug, Clone, Serialize, Deserialize, CandidType)]
 pub struct Profile {
-    pub owner: Principal,
+    pub owner: String,
     pub acount_id: String,
     pub tvl: u32,
     pub description: String,
@@ -111,13 +111,13 @@ pub struct Question {
     pub question_logo: Option<String>,
     pub question_title: String,
     pub question_description: String,
-    pub question_date: u64,
+    pub question_date: String,
     pub question_image: Option<String>,
-    pub question_asker: Principal,
+    pub question_asker: String,
     pub up_thumb: u32,
     pub down_thumb: u32,
     pub tags: Vec<String>,
-    pub answers: HashMap<Principal, Answer>,
+    pub answers: HashMap<String, Answer>,
 }
 
 
@@ -128,9 +128,9 @@ impl Default for Question {
             question_logo: Some("".to_string()),
             question_title: "".to_string(),
             question_description: "".to_string(),
-            question_date: now_nanos(),
+            question_date: now_nanos().to_string(),
             question_image: Some("".to_string()),
-            question_asker: Principal::anonymous(),
+            question_asker: Principal::anonymous().to_string(),
             up_thumb: 0u32,
             down_thumb: 0u32,
             tags: Vec::new(),
@@ -154,8 +154,8 @@ impl Question {
             question_title: question_title,
             question_image: question_image,
             question_description: question_description,
-            question_date: now_nanos(),
-            question_asker: question_asker,
+            question_date: now_nanos().to_string(),
+            question_asker: question_asker.to_string(),
             up_thumb: 0u32,
             down_thumb: 0u32,
             tags: tags,
@@ -164,11 +164,12 @@ impl Question {
     }
 
     pub fn answer_question(&mut self, aq_pid: Principal, answer: Answer) {
-        self.answers.insert(aq_pid, answer);
+        self.answers.insert(aq_pid.to_string(), answer);
     }
 
     pub fn get_answer_by_principal(&self, principal: &Principal) -> Option<&Answer> {
-        self.answers.get(principal)
+        let new_pid_to_string = principal.to_text();
+        self.answers.get(&new_pid_to_string)
     }
 
     pub fn get_all_answers_list(&self) -> Vec<Answer> {
@@ -181,11 +182,11 @@ impl Question {
 pub struct Answer {
     pub answer_content: String,
     pub answer_id: String,
-    pub answer_date: u64,
-    pub answer_pid: Principal,
+    pub answer_date: String,
+    pub answer_pid: String,
     pub up_thumb: u32,
     pub down_thumb: u32,
-    pub comments: HashMap<Principal, Comment>,
+    pub comments: HashMap<String, Comment>,
 }
 
 impl Default for Answer {
@@ -193,8 +194,8 @@ impl Default for Answer {
         Self {
             answer_content: "".to_string(),
             answer_id: "".to_string(),
-            answer_date: now_nanos(),
-            answer_pid: Principal::anonymous(),
+            answer_date: now_nanos().to_string(),
+            answer_pid: Principal::anonymous().to_string(),
             up_thumb: 0u32,
             down_thumb: 0u32,
             comments: HashMap::new(),
@@ -210,10 +211,10 @@ impl Answer {
                     Self {
                         answer_content: answer_content,
                         answer_id: new_aid(),
-                        answer_pid: answer_pid,
+                        answer_pid: answer_pid.to_string(),
                         up_thumb: 0u32,
                         down_thumb: 0u32,
-                        answer_date: now_nanos(),
+                        answer_date: now_nanos().to_string(),
                         comments: HashMap::new(),
         }
     }
@@ -221,7 +222,7 @@ impl Answer {
     pub fn add_comment(&mut self, 
                     commenter: Principal, 
                     comment: Comment) {
-        self.comments.insert(commenter, comment);
+        self.comments.insert(commenter.to_string(), comment);
     }
 
     pub fn get_all_comment_list(&self) -> Vec<Comment> {
@@ -233,8 +234,8 @@ impl Answer {
 pub struct Comment {
     pub comment_content: String,
     pub comment_id: String,
-    pub comment_pid: Principal,
-    pub comment_date: u64,
+    pub comment_pid: String,
+    pub comment_date: String,
     pub up_comment: u32,
     pub down_comment: u32,
 }
@@ -244,8 +245,8 @@ impl Default for Comment {
         Self {
             comment_content: "".to_string(),
             comment_id: "".to_string(),
-            comment_pid: Principal::anonymous(),
-            comment_date: now_nanos(),
+            comment_pid: Principal::anonymous().to_string(),
+            comment_date: now_nanos().to_string(),
             up_comment: 0u32,
             down_comment: 0u32,
         }
@@ -259,9 +260,9 @@ impl Comment {
     ) -> Self {
         Self {
             comment_id: new_cid(),
-            comment_pid: comment_pid,
+            comment_pid: comment_pid.to_string(),
             comment_content: comment_content,
-            comment_date: now_nanos(),
+            comment_date: now_nanos().to_string(),
             up_comment: 0u32,
             down_comment: 0u32,
         }
@@ -305,7 +306,7 @@ impl QuesAns {
 impl Default for Profile {
     fn default() -> Self {
         Self { 
-                 owner: Principal::anonymous(), 
+                 owner: Principal::anonymous().to_string(), 
                  acount_id: "".into(), 
                  tvl: 0u32, 
                  description: "".into(), 
@@ -321,7 +322,7 @@ impl Default for Profile {
 impl Profile {
     // update method
     pub fn set_user_principal(&mut self, principal: &Principal) {
-        self.owner = *principal;
+        self.owner = principal.to_string();
     }
     pub fn update_profile_description(&mut self, desc: &String) {
         self.description = desc.into();

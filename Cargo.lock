@@ -828,6 +828,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "sha256"
+version = "0.1.0"
+dependencies = [
+ "sha2",
+]
+
+[[package]]
 name = "slab"
 version = "0.4.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1003,8 +1010,12 @@ dependencies = [
  "candid",
  "getrandom",
  "ic-cdk",
+ "ic-ledger-types",
  "rand",
  "serde",
+ "serde_bytes",
+ "serde_json",
+ "sha256",
 ]
 
 [[package]]

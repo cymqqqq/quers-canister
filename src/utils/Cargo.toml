@@ -8,4 +8,8 @@ rand = { workspace = true }
 ic-cdk = { workspace = true }
 candid = {workspace = true }
 getrandom = { workspace = true, features = ["custom"] }
+ic-ledger-types = { workspace = true }
+sha256 = { path = "../sha256" }
 serde = { workspace = true }
+serde_bytes = { workspace = true }
+serde_json = { workspace = true }
