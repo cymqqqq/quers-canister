@@ -10,6 +10,7 @@ fn add_new_comment(args: Args) -> Response {
 
 fn add_new_comment_impl(args: &Args, state: &mut RuntimeState) -> Response {
     state.data.add_comment(
+        &args.question_id,
         &args.answer_pid,
         &args.comment_pid,
         &args.comment_content,  

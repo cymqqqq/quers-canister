@@ -163,8 +163,8 @@ impl Question {
         }
     }
 
-    pub fn answer_question(&mut self, aq_pid: Principal, answer: Answer) {
-        self.answers.insert(aq_pid.to_string(), answer);
+    pub fn answer_question(&mut self, aq_pid: Principal, answer: &Answer) {
+        self.answers.insert(aq_pid.to_string(), answer.clone());
     }
 
     pub fn get_answer_by_principal(&self, principal: &Principal) -> Option<&Answer> {

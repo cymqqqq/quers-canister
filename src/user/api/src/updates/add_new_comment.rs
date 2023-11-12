@@ -3,6 +3,7 @@ use serde::{Deserialize, Serialize};
 
 #[derive(CandidType, Serialize, Deserialize, Debug)]
 pub struct Args {
+    pub question_id: String,
     pub comment_content: String,
     pub answer_pid: Principal,
     pub comment_pid: Principal,

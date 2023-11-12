@@ -14,6 +14,7 @@ type Args = record {
 };
 type Args_1 = record {
   comment_content : text;
+  question_id : text;
   answer_pid : principal;
   comment_pid : principal;
 };

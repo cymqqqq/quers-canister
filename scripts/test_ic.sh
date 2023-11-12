@@ -4,7 +4,7 @@ owner="kkwoi-3jebw-6qx6z-yeah7-pgtlm-gbqdm-kkvyt-eqgbl-x3vpw-wfu2w-rqe"
 # dfx canister --network ic call user init_state "(record {owner=principal \"$owner\";})"
 # dfx canister --network ic call user get_user_profile "(record {owner=principal \"$owner\";})"
 # dfx canister --network ic call user set_user_principal "(record {owner=principal \"$owner\";})"
-# dfx canister --network ic scall user update_profile_description "(record {owner=principal \"$owner\"; description=\"hello world\";})"
+# dfx canister --network ic call user update_profile_description "(record {owner=principal \"$owner\"; description=\"hello world\";})"
 
 # dfx canister --network ic call user get_user_profile "(record {owner=principal \"$owner\";})"
 

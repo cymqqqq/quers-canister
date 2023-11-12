@@ -115,7 +115,7 @@ impl Data {
             answer_content.to_string(),
             *answer_pid,
         );
-        question.answer_question(*answer_pid, answer);
+        question.answer_question(*answer_pid, &answer);
         self.homepage.update_question_by_id(&question_id, &question);
     }
 
@@ -124,16 +124,23 @@ impl Data {
     }
     
     pub fn add_comment(&mut self,
+            question_id: &String,
             answer_pid: &Principal,
             comment_pid: &Principal,
             comment_content: &String
     ) {
-        let mut answer = match self.question.get_answer_by_principal(&answer_pid) {
+        let mut question = self.get_question_by_id(&question_id);
+
+        let mut answer = match question.get_answer_by_principal(&answer_pid) {
             Some(answer_internal) => answer_internal.clone(),
             None => Answer::default(),
         };
+
         let new_comment = Comment::new(*comment_pid, comment_content.to_string());
         answer.add_comment(*comment_pid, new_comment);
+        question.answer_question(*answer_pid, &answer);
+        self.homepage.update_question_by_id(&question_id, &question);
+
     }
 
     pub fn get_all_comment_list(&self, 
