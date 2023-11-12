@@ -8,7 +8,10 @@ fn get_all_comment_list(args: Args) -> Response {
 }
 
 fn get_all_comment_list_impl(args: &Args, state: &RuntimeState) -> Response {
-    let comment_vec = state.data.get_all_comment_list(&args.answer_pid);
+    let comment_vec = state.data.get_all_comment_list(
+        &args.question_id,
+        &args.answer_pid
+    );
     Success(SuccessResult{
         comment_list: comment_vec,
     })

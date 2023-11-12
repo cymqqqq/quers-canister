@@ -144,7 +144,9 @@ impl Data {
     }
 
     pub fn get_all_comment_list(&self, 
+        question_id: &String,
         answer_pid: &Principal) -> Vec<Comment> {
+        let question = self.get_question_by_id(&question_id);
 
         let answer= match self.question.get_answer_by_principal(&answer_pid)  
         {

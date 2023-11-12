@@ -3,6 +3,7 @@ use serde::{Deserialize, Serialize};
 use utils::types::Comment;
 #[derive(CandidType, Serialize, Deserialize, Debug)]
 pub struct Args {
+    pub question_id: String,
     pub answer_pid: Principal,
 }
 
