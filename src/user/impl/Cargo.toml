@@ -25,3 +25,5 @@ canister_library= { path="../../canister_library" }
 utils = {path = "../../utils"}
 anyhow = { workspace = true }
 user_canister = {path = "../api" }
+ic-stable-structures = { workspace = true }
+tracing = { workspace = true }

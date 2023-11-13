@@ -12,6 +12,7 @@ pub mod guards;
 pub mod model;
 pub mod queries;
 pub mod updates;
+pub mod memory;
 
 canister_state!(RuntimeState);
 

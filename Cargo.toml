@@ -26,3 +26,7 @@ num-traits = "0.2.14"
 getrandom = "0.2.10"
 anyhow = "1.0.0"
 sha2 = "0.10.7"
+ic-stable-structures = "0.5.6"
+rmp-serde = "1.1.2"
+tracing = "0.1.37"
+

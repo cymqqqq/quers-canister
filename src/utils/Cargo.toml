@@ -13,3 +13,4 @@ sha256 = { path = "../sha256" }
 serde = { workspace = true }
 serde_bytes = { workspace = true }
 serde_json = { workspace = true }
+rmp-serde = { workspace = true }

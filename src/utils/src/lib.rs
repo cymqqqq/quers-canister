@@ -3,3 +3,4 @@ pub mod time;
 pub mod canister;
 pub mod raw_rand;
 pub mod types;
+pub mod serializer;
