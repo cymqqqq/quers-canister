@@ -175,11 +175,10 @@ impl Question {
 #[derive(Debug, Clone, CandidType, Serialize, Deserialize)]
 pub struct Answer {
     pub answer_content: String,
-    pub answer_id: String,
+    // pub answer_id: String,
     pub answer_date: String,
     pub answer_pid: String,
     pub up_thumb: u32,
-    pub down_thumb: u32,
     pub comments: HashMap<String, Comment>,
 }
 
@@ -187,11 +186,10 @@ impl Default for Answer {
     fn default() -> Self {
         Self {
             answer_content: "".to_string(),
-            answer_id: "".to_string(),
+            // answer_id: "".to_string(),
             answer_date: now_nanos().to_string(),
             answer_pid: Principal::anonymous().to_string(),
             up_thumb: 0u32,
-            down_thumb: 0u32,
             comments: HashMap::new(),
         }
     }
@@ -204,10 +202,9 @@ impl Answer {
                 ) -> Self {
                     Self {
                         answer_content: answer_content,
-                        answer_id: new_aid(),
+                        // answer_id: new_aid(),
                         answer_pid: answer_pid.to_string(),
                         up_thumb: 0u32,
-                        down_thumb: 0u32,
                         answer_date: now_nanos().to_string(),
                         comments: HashMap::new(),
         }
@@ -227,22 +224,20 @@ impl Answer {
 #[derive(Debug, Clone ,CandidType, Serialize, Deserialize)]
 pub struct Comment {
     pub comment_content: String,
-    pub comment_id: String,
+    // pub comment_id: String,
     pub comment_pid: String,
     pub comment_date: String,
     pub up_comment: u32,
-    pub down_comment: u32,
 }
 
 impl Default for Comment {
     fn default() -> Self {
         Self {
             comment_content: "".to_string(),
-            comment_id: "".to_string(),
+            // comment_id: "".to_string(),
             comment_pid: Principal::anonymous().to_string(),
             comment_date: now_nanos().to_string(),
             up_comment: 0u32,
-            down_comment: 0u32,
         }
     }
 }
@@ -253,12 +248,11 @@ impl Comment {
         comment_content: String,
     ) -> Self {
         Self {
-            comment_id: new_cid(),
+            // comment_id: new_cid(),
             comment_pid: comment_pid.to_string(),
             comment_content: comment_content,
             comment_date: now_nanos().to_string(),
             up_comment: 0u32,
-            down_comment: 0u32,
         }
     }
 }

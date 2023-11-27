@@ -1,6 +1,4 @@
 type Answer = record {
-  down_thumb : nat32;
-  answer_id : text;
   answer_content : text;
   up_thumb : nat32;
   answer_date : text;
@@ -43,11 +41,9 @@ type Args_8 = record { owner : principal };
 type Args_9 = record { owner : principal; name : text };
 type Comment = record {
   comment_content : text;
-  down_comment : nat32;
   comment_date : text;
   comment_pid : text;
   up_comment : nat32;
-  comment_id : text;
 };
 type Profile = record {
   tvl : nat32;
