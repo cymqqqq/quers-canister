@@ -7,3 +7,7 @@ pub mod update_user_holding;
 pub mod add_new_question;
 pub mod add_new_answer;
 pub mod add_new_comment;
+pub mod add_profile_watch_list;
+pub mod update_username;
+pub mod update_name;
+pub mod update_user_tickets;

@@ -16,7 +16,7 @@ pub struct CanisterEnv {
 impl CanisterEnv {
     pub fn new(seed: [u8; 32]) -> Self {
         Self {
-            rng: StdRng::from_seed(seed)
+            rng: StdRng::from_seed(seed),
         }
     }
 }

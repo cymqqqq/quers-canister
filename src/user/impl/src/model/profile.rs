@@ -78,6 +78,50 @@ impl UserIndex {
         profile_map.update_profile_holding(holding);
         self.profile.insert(*owner, profile_map);
     }
+
+    pub fn update_username(&mut self, owner: &Principal, username: &String) {
+        let mut profile_map = match self.profile.get_mut(owner) {
+            Some(profile) => profile.clone(),
+            None => Profile::default(),
+        };
+        profile_map.update_profile_username(&username);
+        self.profile.insert(*owner, profile_map);
+    }
     
+    pub fn update_name(&mut self, owner: &Principal, name: &String) {
+        let mut profile_map = match self.profile.get_mut(owner) {
+            Some(profile) => profile.clone(),
+            None => Profile::default(),
+        };
+        profile_map.update_profile_name(&name);
+        self.profile.insert(*owner, profile_map);
+    }
+
+    pub fn update_user_ticket(&mut self, owner: &Principal, tickets: &u32) {
+        let mut profile_map = match self.profile.get_mut(owner) {
+            Some(profile) => profile.clone(),
+            None => Profile::default(),
+        };
+        profile_map.update_profile_tickets(&tickets);
+        self.profile.insert(*owner, profile_map);
+    }
+
+    pub fn update_user_question_list(&mut self, owner: &Principal, question: &Question) {
+        let mut profile_map = self.get_user_profile(&owner);
+        profile_map.add_profile_question(question);
+        self.profile.insert(*owner, profile_map);
+    }
+
+    pub fn update_user_answer_list(&mut self, owner: &Principal, answer: &Answer) {
+        let mut profile_map = self.get_user_profile(&owner);
+        profile_map.add_profile_answer(&answer);
+        self.profile.insert(*owner, profile_map);
+    }
+
+    pub fn update_user_watch_list(&mut self, owner: &Principal, question_id: &String) {
+        let mut profile_map = self.get_user_profile(&owner);
+        profile_map.add_watch_list(&question_id);
+        self.profile.insert(*owner, profile_map);
+    }
 }
 

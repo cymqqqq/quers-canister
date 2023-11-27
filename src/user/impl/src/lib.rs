@@ -1,11 +1,13 @@
 use canister_library::canister_state;
 use crate::model::profile::UserIndex;
 use candid::Principal;
+use candid::CandidType;
 use serde::{Deserialize, Serialize};
 // use std::cell::RefCell;
 // use std::collections::{HashMap, HashSet};
 use utils::env::Environment;
 use utils::types::*;
+use utils::types::{new_qid};
 // use utils::time::DAY_IN_MS;
 pub mod lifecycle;
 pub mod guards;
@@ -30,9 +32,10 @@ impl RuntimeState {
         let caller = self.env.caller();
         self.data.users.profile.get(&caller).is_some()
     }
+
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, CandidType)]
 struct Data {
     pub users: UserIndex,
     pub homepage: HomePage,
@@ -74,6 +77,17 @@ impl Data {
         self.users.update_user_holding(&owner, &holding);
     }
 
+    pub fn update_username(&mut self, owner: &Principal, username: &String) {
+        self.users.update_username(&owner, &username);
+    }
+
+    pub fn update_name(&mut self, owner: &Principal, name: &String) {
+        self.users.update_name(&owner, &name);
+    }
+
+    pub fn update_user_tickets(&mut self, owner: &Principal, tickets: &u32) {
+        self.users.update_user_ticket(&owner, &tickets);
+    }
     pub fn get_all_question_list(&self) -> Vec<Question> {
         self.homepage.get_all_question_list()
     }
@@ -86,13 +100,22 @@ impl Data {
         question_asker: &Principal,
         tags: &Vec<String>,
     ) {
-        self.homepage.ask_question(question_logo,
-            question_title,
-            question_description,
-            question_image,
-            question_asker,
-            tags
+        let q_id = new_qid();
+        let question_obj = Question::new(
+            &q_id,
+            question_title.to_string(),
+                question_description.to_string(),
+                question_logo.clone(),
+                question_image.clone(),
+                *question_asker,
+                tags.to_vec(),
         );
+        self.users.update_user_question_list(&question_asker, &question_obj);
+        self.homepage.ask_question(&q_id, question_obj);
+    }
+
+    pub fn add_profile_watch_list(&mut self, user: &Principal, question_id: &String) {
+        self.users.update_user_watch_list(&user, &question_id);
     }
 
     pub fn get_question_by_id(&self, question_id: &String) -> Question {
@@ -103,6 +126,30 @@ impl Data {
         question
     }
 
+    pub fn view_by_page(&self, page: usize , num_of_page: Option<usize>) -> (i32, Vec<Question>) {
+        assert!(page > 0);
+    
+        let num_of_page = num_of_page.unwrap_or(10usize);
+        let question_list = self.homepage.get_all_question_list();
+        // EVENTS.with(|events| {
+            // let v = events.clone().into_inner();
+            let start = (page - 1) * num_of_page;
+            let end = std::cmp::min(question_list.len(), page * num_of_page);
+            assert!(start < end);
+    
+            let mut v_rev = question_list[start..end].to_vec();
+            v_rev.reverse();
+            (question_list[start..end].len() as i32, v_rev)
+        // })
+    }
+
+    pub fn get_question_up_thumb_by_id(&self, question_id: &String) -> u32 {
+        self.get_question_by_id(&question_id).get_question_up_thumb()
+    }
+
+    pub fn get_question_down_thumb_by_id(&self, question_id: &String) -> u32 {
+        self.get_question_by_id(&question_id).get_question_down_thumb()
+    }
     
 
     pub fn add_answer(&mut self,
@@ -116,6 +163,7 @@ impl Data {
             answer_content.to_string(),
             *answer_pid,
         );
+        self.users.update_user_answer_list(&answer_pid, &answer);
         question.answer_question(*answer_pid, &answer);
         self.homepage.update_question_by_id(&question_id, &question);
     }
@@ -156,6 +204,7 @@ impl Data {
         };
         answer.get_all_comment_list()
     }
+
 }
 
 
@@ -206,18 +255,3 @@ impl Data {
 //     })
 // }
 
-// pub fn view_today(page: usize , num_of_page: Option<usize>) -> (i32, Vec<Events>) {
-//     assert!(page > 0);
-
-//     let num_of_page = num_of_page.unwrap_or(NUM_OF_PAGE);
-//     EVENTS.with(|events| {
-//         let v = events.clone().into_inner();
-//         let start = (page - 1) * num_of_page;
-//         let end = std::cmp::min(v.len(), page * num_of_page);
-//         assert!(start < end);
-
-//         let mut v_rev = v[start..end].to_vec();
-//         v_rev.reverse();
-//         (v[start..end].len() as i32, v_rev)
-//     })
-// }
