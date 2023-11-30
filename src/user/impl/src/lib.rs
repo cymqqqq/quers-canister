@@ -73,6 +73,18 @@ impl Data {
         self.users.update_user_followers(&owner, &followers);
     }
 
+    pub fn update_user_following(&mut self, owner: &Principal, following: &u32) {
+        self.users.update_user_following(&owner, &following);
+    }
+
+    pub fn get_profile_followers(&self, owner: &Principal) -> u32 {
+        self.users.get_profile_followers(&owner)
+    }
+
+    pub fn get_profile_following(&self, owner: &Principal) -> u32 {
+        self.users.get_profile_following(&owner)
+    }
+
     pub fn update_user_holding(&mut self, owner: &Principal, holding: &u32) {
         self.users.update_user_holding(&owner, &holding);
     }
@@ -92,6 +104,10 @@ impl Data {
         self.homepage.get_all_question_list()
     }
 
+    pub fn get_all_question_id_list(&self) -> Vec<String> {
+        self.homepage.get_all_question_id_list()
+    }
+    
     pub fn add_question(&mut self,
         question_logo: &Option<String>,
         question_title: &String,
@@ -126,6 +142,19 @@ impl Data {
         question
     }
 
+
+    pub fn up_vote(&mut self, question_id: &String) {
+        let mut question = self.get_question_by_id(&question_id);
+        question.up_vote();
+        self.homepage.update_question_by_id(&question_id, &question);
+
+    }
+
+    pub fn down_vote(&mut self, question_id: &String) {
+        let mut question = self.get_question_by_id(&question_id);
+        question.down_vote();
+        self.homepage.update_question_by_id(&question_id, &question);
+    }
     pub fn view_by_page(&self, page: usize , num_of_page: Option<usize>) -> (i32, Vec<Question>) {
         assert!(page > 0);
     
@@ -143,12 +172,8 @@ impl Data {
         // })
     }
 
-    pub fn get_question_up_thumb_by_id(&self, question_id: &String) -> u32 {
-        self.get_question_by_id(&question_id).get_question_up_thumb()
-    }
-
-    pub fn get_question_down_thumb_by_id(&self, question_id: &String) -> u32 {
-        self.get_question_by_id(&question_id).get_question_down_thumb()
+    pub fn get_question_votes_by_id(&self, question_id: &String) -> u32 {
+        self.get_question_by_id(&question_id).get_question_votes()
     }
     
 

@@ -70,6 +70,15 @@ impl UserIndex {
         self.profile.insert(*owner, profile_map);
     }
 
+    pub fn update_user_following(&mut self, owner: &Principal, following: &u32) {
+        let mut profile_map = match self.profile.get_mut(owner) {
+            Some(profile) => profile.clone(),
+            None => Profile::default(),
+        };
+        profile_map.update_profile_followers(following);
+        self.profile.insert(*owner, profile_map);
+    }
+
     pub fn update_user_holding(&mut self, owner: &Principal, holding: &u32) {
         let mut profile_map = match self.profile.get_mut(owner) {
             Some(profile) => profile.clone(),
@@ -122,6 +131,16 @@ impl UserIndex {
         let mut profile_map = self.get_user_profile(&owner);
         profile_map.add_watch_list(&question_id);
         self.profile.insert(*owner, profile_map);
+    }
+
+    pub fn get_profile_followers(&self, owner: &Principal) -> u32 {
+        self.get_user_profile(&owner)
+        .get_profile_followers()
+    }
+
+    pub fn get_profile_following(&self, owner: &Principal) -> u32 {
+        self.get_user_profile(&owner)
+        .get_profile_following()
     }
 }
 

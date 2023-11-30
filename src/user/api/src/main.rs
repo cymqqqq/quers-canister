@@ -4,8 +4,12 @@ use candid_gen::generate_candid_method;
 fn main() {
     generate_candid_method!(user, init_state, query);
     generate_candid_method!(user, get_user_profile, query);
+    generate_candid_method!(user, get_user_followers, query);
+    generate_candid_method!(user, get_user_following, query);
 
     generate_candid_method!(user, update_user_followers, update);
+    generate_candid_method!(user, update_user_following, update);
+
     generate_candid_method!(user, update_user_holders, update);
     generate_candid_method!(user, update_user_holding, update);
     generate_candid_method!(user, update_user_tickets, update);
@@ -18,11 +22,14 @@ fn main() {
     generate_candid_method!(user, update_profile_description, update);
 
     generate_candid_method!(user, add_new_question, update);
+    generate_candid_method!(user, up_vote, update);
+    generate_candid_method!(user, down_vote, update);
+
     generate_candid_method!(user, view_by_page, query);
     generate_candid_method!(user, get_question_by_id, query);
+    generate_candid_method!(user, get_all_question_id_list, query);
     generate_candid_method!(user, get_all_question_list, query);
-    generate_candid_method!(user, get_question_up_thumb_by_id, query);
-    generate_candid_method!(user, get_question_down_thumb_by_id, query);
+    generate_candid_method!(user, get_question_votes_by_id, query);
 
     generate_candid_method!(user, add_new_answer, update);
     generate_candid_method!(user, get_all_answers_list_by_question_id, query);

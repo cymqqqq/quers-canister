@@ -11,9 +11,11 @@ use ic_cdk;
 // fn post_upgrade() {
 //     let env = init_env();
 //     let memory = get_upgrade_memory();
+
 //     let reader = BufferedReader::new(UPGRADE_BUFFER_SIZE, Reader::new(&memory, 0));
 //     let data: Data= serializer::deserialize(reader).unwrap();
 //     init_state(env, data);
+
 //     reset_memory_manager();
 //     info!("Post-upgrade complete");
 
@@ -34,21 +36,21 @@ fn post_upgrade() {
         
         state.data = data_store;
         
-        // match ic_cdk::storage::stable_restore::<(
-        //     Data,
-        // )>() {
-        //     Ok((data_store, )) => {
-        //         init_state(env, data_store.clone());
-        //         state.data = data_store;
+    //     match ic_cdk::storage::stable_restore::<(
+    //         Data,
+    //     )>() {
+    //         Ok((data_store, )) => {
+    //             // init_state(env, data_store.clone());
+    //             state.data = data_store;
                 
-        //     }
-        //     Err(err) => {
+    //         }
+    //         Err(err) => {
                
-        //         format!(
-        //             "An error occurred when loading from stable memory (post_upgrade): {:?}",
-        //             err
-        //         );
-        //     }
-        // }
+    //             format!(
+    //                 "An error occurred when loading from stable memory (post_upgrade): {:?}",
+    //                 err
+    //             );
+    //         }
+    //     }
     });
 }

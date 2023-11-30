@@ -11,3 +11,5 @@ pub mod add_profile_watch_list;
 pub mod update_username;
 pub mod update_name;
 pub mod update_user_tickets;
+pub mod up_vote;
+pub mod down_vote;

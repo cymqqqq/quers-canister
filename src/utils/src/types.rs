@@ -44,6 +44,7 @@ pub struct Profile {
     pub description: String,
     pub holders: u32,
     pub followers: u32,
+    pub following: u32,
     pub holding: u32,
     pub qa_mod: QuesAns,
     pub tickets: u32,
@@ -79,6 +80,10 @@ impl HomePage {
         self.question_list.values().cloned().collect()
     }
 
+    pub fn get_all_question_id_list(&self) -> Vec<String> {
+        self.question_list.keys().cloned().collect()
+    }
+
     pub fn get_question_by_id(&self, question_id: &String) -> Option<&Question> {
         self.question_list.get(question_id)
     }
@@ -101,8 +106,7 @@ pub struct Question {
     pub question_date: String,
     pub question_image: Option<String>,
     pub question_asker: String,
-    pub up_thumb: u32,
-    pub down_thumb: u32,
+    pub votes: u32,
     pub tags: Vec<String>,
     pub answers: HashMap<String, Answer>,
 }
@@ -118,8 +122,7 @@ impl Default for Question {
             question_date: now_nanos().to_string(),
             question_image: Some("".to_string()),
             question_asker: Principal::anonymous().to_string(),
-            up_thumb: 0u32,
-            down_thumb: 0u32,
+            votes: 0u32,
             tags: Vec::new(),
             answers: HashMap::new(),
         }
@@ -143,8 +146,7 @@ impl Question {
             question_description: question_description,
             question_date: now_nanos().to_string(),
             question_asker: question_asker.to_string(),
-            up_thumb: 0u32,
-            down_thumb: 0u32,
+            votes: 0u32,
             tags: tags,
             answers: HashMap::new(),
         }
@@ -163,12 +165,16 @@ impl Question {
         self.answers.values().cloned().collect()
     }
 
-    pub fn get_question_up_thumb(&self) -> u32 {
-        self.up_thumb
+    pub fn get_question_votes(&self) -> u32 {
+        self.votes
     }
 
-    pub fn get_question_down_thumb(&self) -> u32 {
-        self.down_thumb
+    pub fn up_vote(&mut self) {
+        self.votes += 1;
+    }
+
+    pub fn down_vote(&mut self) {
+        self.votes -= 1;
     }
 }
 
@@ -310,6 +316,7 @@ impl Default for Profile {
                  description: "".into(), 
                  holders: 0u32, 
                  followers: 0u32,
+                 following: 0u32,
                  holding: 0u32,
                  qa_mod: QuesAns::default(),
                  tickets: 0u32,
@@ -329,6 +336,7 @@ impl Profile {
         description: String, 
         holders: u32, 
         followers: u32,
+        following: u32,
         holding: u32,
         tickets: u32,
         name: String,
@@ -342,6 +350,7 @@ impl Profile {
             description: description,
             holders: holders,
             followers: followers,
+            following: following,
             holding: holding,
             tickets: tickets,
             name: name,
@@ -381,6 +390,10 @@ impl Profile {
         self.followers += followers;
     }
 
+    pub fn update_profile_following(&mut self, following: &u32) {
+        self.following += following;
+    }
+
     pub fn update_profile_holding(&mut self, holding: &u32) {
         self.holding += holding;
     }
@@ -417,6 +430,10 @@ impl Profile {
 
     pub fn get_profile_followers(&self) -> u32 {
         self.followers.into()
+    }
+
+    pub fn get_profile_following(&self) -> u32 {
+        self.following.into()
     }
 
     pub fn get_profile_watch_list(self) -> Vec<String> {

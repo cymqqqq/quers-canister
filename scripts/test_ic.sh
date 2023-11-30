@@ -1,6 +1,8 @@
 
 
 owner="kkwoi-3jebw-6qx6z-yeah7-pgtlm-gbqdm-kkvyt-eqgbl-x3vpw-wfu2w-rqe"
+question="GameFi, SocialFi, DeFi, Layer2, and new blockchains – which  sector do you think is more likely to emerge as the ultimate winner in  the next bull market?"
+desc="about GameFi, SocialFi, DeFi, Layer2"
 # dfx canister --network ic call user init_state "(record {owner=principal \"$owner\";})"
 # dfx canister --network ic call user get_user_profile "(record {owner=principal \"$owner\";})"
 # dfx canister --network ic call user set_user_principal "(record {owner=principal \"$owner\";})"
@@ -22,14 +24,13 @@ owner="kkwoi-3jebw-6qx6z-yeah7-pgtlm-gbqdm-kkvyt-eqgbl-x3vpw-wfu2w-rqe"
 # dfx canister --network ic call user get_user_profile "(record {owner=principal \"$owner\";})"
 
 dfx canister --network ic call user add_new_question \
-"record {question_title=\"hello\"; \
+"record {question_title=\"$question\"; \
 question_asker= principal \"$owner\"; \
 question_logo=opt \"\"; \
-question_description=\"hello\"; \
-tags=vec {\"ETH\"}; \
+question_description=\"$desc\"; \
+tags=vec {\"GameFi, SocialFi, DeFi, Layer2\"}; \
 question_image=opt \"\"; \
 }"
 
 
 # dfx canister --network ic call user get_all_question_list "record {}"
-
