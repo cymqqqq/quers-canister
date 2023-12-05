@@ -17,6 +17,11 @@ impl UserIndex {
         Self { profile: HashMap::new(), }
     }
 
+    pub fn set_user_profile(&mut self, profile: &Profile) {
+        let principal = Principal::from_text(&profile.owner).unwrap();
+        self.profile.insert(principal, profile.clone());
+
+    }
     pub fn get_user_profile(&self, principal: &Principal) -> Profile {
         match self.profile.get(principal) {
             Some(profile) => profile.clone(),

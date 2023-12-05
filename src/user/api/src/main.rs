@@ -3,6 +3,7 @@ use candid_gen::generate_candid_method;
 #[allow(deprecate)]
 fn main() {
     generate_candid_method!(user, init_state, query);
+    generate_candid_method!(user, set_user_profile, update);
     generate_candid_method!(user, get_user_profile, query);
     generate_candid_method!(user, get_user_followers, query);
     generate_candid_method!(user, get_user_following, query);

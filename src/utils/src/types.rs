@@ -39,7 +39,6 @@ fn new_cid() -> String {
 #[derive(Debug, Clone, Serialize, Deserialize, CandidType)]
 pub struct Profile {
     pub owner: String,
-    pub acount_id: String,
     pub tvl: u32,
     pub description: String,
     pub holders: u32,
@@ -311,7 +310,6 @@ impl Default for Profile {
     fn default() -> Self {
         Self { 
                  owner: Principal::anonymous().to_string(), 
-                 acount_id: "".into(), 
                  tvl: 0u32, 
                  description: "".into(), 
                  holders: 0u32, 
@@ -331,28 +329,20 @@ impl Profile {
     // update method
     pub fn new(
         owner: Principal, 
-        acount_id: String, 
-        tvl: u32, 
         description: String, 
-        holders: u32, 
-        followers: u32,
-        following: u32,
-        holding: u32,
-        tickets: u32,
         name: String,
         username: String,
 
     ) -> Self {
         Self {
             owner: owner.to_text(),
-            acount_id: acount_id,
-            tvl: tvl,
+            tvl: 0u32,
             description: description,
-            holders: holders,
-            followers: followers,
-            following: following,
-            holding: holding,
-            tickets: tickets,
+            holders: 0u32,
+            followers: 0u32,
+            following: 0u32,
+            holding: 0u32,
+            tickets: 0u32,
             name: name,
             username: username,
             qa_mod: QuesAns::default(),
