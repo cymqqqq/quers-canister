@@ -18,23 +18,6 @@ pub fn new_qid() -> String {
     format!("{}-{}", cid.to_text(), qid + 1)
 }
 
-static AID: AtomicU16 = AtomicU16::new(0);
-// generate new answer id
-fn new_aid() -> String {
-    let cid = ic_cdk::api::id();
-
-    let aid = QID.fetch_add(1, atomic::Ordering::SeqCst);
-    format!("{}-{}", cid.to_text(), aid + 1)
-}
-
-static CID: AtomicU16 = AtomicU16::new(0);
-// generate new comment id
-fn new_cid() -> String {
-    let cid = ic_cdk::api::id();
-
-    let comment_id = CID.fetch_add(1, atomic::Ordering::SeqCst);
-    format!("{}-{}", cid.to_text(), comment_id + 1)
-}
 
 #[derive(Debug, Clone, Serialize, Deserialize, CandidType)]
 pub struct Profile {
@@ -42,8 +25,6 @@ pub struct Profile {
     pub tvl: u32,
     pub description: String,
     pub holders: u32,
-    pub followers: u32,
-    pub following: u32,
     pub holding: u32,
     pub qa_mod: QuesAns,
     pub tickets: u32,
@@ -313,8 +294,6 @@ impl Default for Profile {
                  tvl: 0u32, 
                  description: "".into(), 
                  holders: 0u32, 
-                 followers: 0u32,
-                 following: 0u32,
                  holding: 0u32,
                  qa_mod: QuesAns::default(),
                  tickets: 0u32,
@@ -339,8 +318,6 @@ impl Profile {
             tvl: 0u32,
             description: description,
             holders: 0u32,
-            followers: 0u32,
-            following: 0u32,
             holding: 0u32,
             tickets: 0u32,
             name: name,
@@ -372,18 +349,6 @@ impl Profile {
         self.name = name.into();
     }
 
-    pub fn update_profile_holders(&mut self, holders: &u32) {
-        self.holders += holders;
-    }
-
-    pub fn update_profile_followers(&mut self, followers: &u32) {
-        self.followers += followers;
-    }
-
-    pub fn update_profile_following(&mut self, following: &u32) {
-        self.following += following;
-    }
-
     pub fn update_profile_holding(&mut self, holding: &u32) {
         self.holding += holding;
     }
@@ -401,7 +366,6 @@ impl Profile {
     }
     // query method
 
-
     pub fn get_profile_description(&self) -> String {
         self.description.clone()
     }
@@ -416,14 +380,6 @@ impl Profile {
 
     pub fn get_profile_holding(&self) -> u32 {
         self.holding.into()
-    }
-
-    pub fn get_profile_followers(&self) -> u32 {
-        self.followers.into()
-    }
-
-    pub fn get_profile_following(&self) -> u32 {
-        self.following.into()
     }
 
     pub fn get_profile_watch_list(self) -> Vec<String> {

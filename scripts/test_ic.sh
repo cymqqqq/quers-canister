@@ -34,3 +34,6 @@ question_image=opt \"\"; \
 
 
 # dfx canister --network ic call user get_all_question_list "record {}"
+
+
+# http://bitask.club:3001/homepage/viewByPage?sort=1&page=72&limit=10 404 (Not Found)
