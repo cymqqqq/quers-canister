@@ -1,7 +1,7 @@
 use candid::{CandidType, Principal};
 use serde::{Deserialize, Serialize};
 use std::sync::atomic::{self, AtomicU16};
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 use crate::env::{
     TimestampNanos,
 };
@@ -31,8 +31,6 @@ pub struct Profile {
     pub name: String,
     pub username: String,
 }
-
-
 
 #[derive(Debug, Clone, CandidType, Serialize, Deserialize)]
 pub struct HomePage {
@@ -349,6 +347,10 @@ impl Profile {
         self.name = name.into();
     }
 
+    pub fn update_profile_holders(&mut self, holders: &u32) {
+        self.holders += holders;
+    }
+
     pub fn update_profile_holding(&mut self, holding: &u32) {
         self.holding += holding;
     }
@@ -384,5 +386,82 @@ impl Profile {
 
     pub fn get_profile_watch_list(self) -> Vec<String> {
         self.qa_mod.get_all_profile_watch_list()
+    }
+}
+
+#[derive(Debug, Clone, CandidType, Serialize, Deserialize)]
+pub struct Follow {
+    pub followers: HashMap<(String, String), HashSet<String>>,
+    pub followings: HashMap<(String, String), HashSet<String>>,
+}
+
+impl Default for Follow {
+    fn default() -> Self {
+        Self {
+            followers: HashMap::new(),
+            followings: HashMap::new(),
+        }
+    }
+}
+
+const Follower: &str = "follower";
+const Following: &str = "following";
+
+impl Follow {
+
+    fn get_followers_set(&self, owner: &Principal) -> HashSet<String> {
+        match self.followers.get(&(owner.to_string(), Follower.to_string())) {
+            Some(followers_set) => followers_set.clone(),
+            None => HashSet::new(),
+        }
+    }
+
+    fn get_followings_set(&self, owner: &Principal) -> HashSet<String> {
+        match self.followings.get(&(owner.to_string(), Following.to_string())) {
+            Some(following_set) => following_set.clone(),
+            None => HashSet::new(),
+        }
+    }
+
+    fn add_follower_operation(&mut self, owner: &Principal, to_follow: &Principal) {
+        let mut follower_map = self.get_followers_set(&owner);
+        follower_map.insert(to_follow.to_string());
+        self.followers.insert((owner.to_string(), Follower.to_string()), follower_map);
+    }
+
+    fn add_following_operation(&mut self, to_follow: &Principal, owner: &Principal) {
+        let mut following_map = self.get_followings_set(&to_follow);
+        following_map.insert(owner.to_string());
+        self.followings.insert((to_follow.to_string(), Following.to_string()), following_map);
+    }
+
+    fn remove_follower_operation(&mut self, owner: &Principal, to_follow: &Principal) {
+        let mut follower_map = self.get_followers_set(&owner);
+        follower_map.remove(&owner.to_string());
+        self.followers.insert((owner.to_string(), Follower.to_string()), follower_map);
+    }
+
+    fn remove_following_operation(&mut self, to_follow: &Principal, owner: &Principal) {
+        let mut following_map = self.get_followings_set(&owner);
+        following_map.remove(&to_follow.to_string());
+        self.followings.insert((to_follow.to_string(), Following.to_string()), following_map);
+    }
+
+    pub fn follow(&mut self, owner: &Principal, to_follow: &Principal) {
+        self.add_follower_operation(&owner, &to_follow);
+        self.add_following_operation(&to_follow, &owner);
+    }
+
+    pub fn un_follow(&mut self, owner: &Principal, to_follow: &Principal) {
+        self.remove_follower_operation(&owner, &to_follow);
+        self.remove_following_operation(&to_follow, &owner);
+    }
+
+    pub fn get_profile_follower_counts(&self, owner: &Principal) -> usize {
+        self.get_followers_set(&owner).len()
+    }
+
+    pub fn get_profile_following_counts(&self, owner: &Principal) -> usize {
+        self.get_followings_set(&owner).len()
     }
 }

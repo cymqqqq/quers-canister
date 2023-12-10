@@ -65,7 +65,7 @@ impl UserIndex {
         profile_map.update_profile_holders(holders);
         self.profile.insert(*owner, profile_map);
     }
-    
+
     pub fn update_user_holding(&mut self, owner: &Principal, holding: &u32) {
         let mut profile_map = match self.profile.get_mut(owner) {
             Some(profile) => profile.clone(),
@@ -120,14 +120,5 @@ impl UserIndex {
         self.profile.insert(*owner, profile_map);
     }
 
-    pub fn get_profile_followers(&self, owner: &Principal) -> u32 {
-        self.get_user_profile(&owner)
-        .get_profile_followers()
-    }
-
-    pub fn get_profile_following(&self, owner: &Principal) -> u32 {
-        self.get_user_profile(&owner)
-        .get_profile_following()
-    }
 }
 

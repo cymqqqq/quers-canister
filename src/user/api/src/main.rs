@@ -5,11 +5,6 @@ fn main() {
     generate_candid_method!(user, init_state, query);
     generate_candid_method!(user, set_user_profile, update);
     generate_candid_method!(user, get_user_profile, query);
-    generate_candid_method!(user, get_user_followers, query);
-    generate_candid_method!(user, get_user_following, query);
-
-    generate_candid_method!(user, update_user_followers, update);
-    generate_candid_method!(user, update_user_following, update);
 
     generate_candid_method!(user, update_user_holders, update);
     generate_candid_method!(user, update_user_holding, update);
