@@ -391,8 +391,8 @@ impl Profile {
 
 #[derive(Debug, Clone, CandidType, Serialize, Deserialize)]
 pub struct Follow {
-    pub followers: HashMap<(String, String), HashSet<String>>,
-    pub followings: HashMap<(String, String), HashSet<String>>,
+    pub followers: HashMap<String, HashSet<String>>,
+    pub followings: HashMap<String, HashSet<String>>,
 }
 
 impl Default for Follow {
@@ -404,57 +404,55 @@ impl Default for Follow {
     }
 }
 
-const Follower: &str = "follower";
-const Following: &str = "following";
 
 impl Follow {
 
     fn get_followers_set(&self, owner: &Principal) -> HashSet<String> {
-        match self.followers.get(&(owner.to_string(), Follower.to_string())) {
+        match self.followers.get(&owner.to_string()) {
             Some(followers_set) => followers_set.clone(),
             None => HashSet::new(),
         }
     }
 
     fn get_followings_set(&self, owner: &Principal) -> HashSet<String> {
-        match self.followings.get(&(owner.to_string(), Following.to_string())) {
+        match self.followings.get(&owner.to_string()) {
             Some(following_set) => following_set.clone(),
             None => HashSet::new(),
         }
     }
 
-    fn add_follower_operation(&mut self, owner: &Principal, to_follow: &Principal) {
-        let mut follower_map = self.get_followers_set(&owner);
-        follower_map.insert(to_follow.to_string());
-        self.followers.insert((owner.to_string(), Follower.to_string()), follower_map);
+    fn add_following_operation(&mut self, owner: &Principal, to_follow: &Principal) {
+        let mut following_map = self.get_followings_set(&owner);
+        following_map.insert(to_follow.to_string());
+        self.followings.insert(owner.to_string(), following_map);
     }
 
-    fn add_following_operation(&mut self, to_follow: &Principal, owner: &Principal) {
-        let mut following_map = self.get_followings_set(&to_follow);
-        following_map.insert(owner.to_string());
-        self.followings.insert((to_follow.to_string(), Following.to_string()), following_map);
+    fn add_follower_operation(&mut self, to_follow: &Principal, owner: &Principal) {
+        let mut follower_map = self.get_followers_set(&to_follow);
+        follower_map.insert(owner.to_string());
+        self.followers.insert(to_follow.to_string(), follower_map);
     }
 
-    fn remove_follower_operation(&mut self, owner: &Principal, to_follow: &Principal) {
-        let mut follower_map = self.get_followers_set(&owner);
-        follower_map.remove(&owner.to_string());
-        self.followers.insert((owner.to_string(), Follower.to_string()), follower_map);
-    }
-
-    fn remove_following_operation(&mut self, to_follow: &Principal, owner: &Principal) {
+    fn remove_following_operation(&mut self, owner: &Principal, to_follow: &Principal) {
         let mut following_map = self.get_followings_set(&owner);
         following_map.remove(&to_follow.to_string());
-        self.followings.insert((to_follow.to_string(), Following.to_string()), following_map);
+        self.followings.insert(owner.to_string(), following_map);
+    }
+
+    fn remove_follower_operation(&mut self, to_follow: &Principal, owner: &Principal) {
+        let mut follower_map = self.get_followers_set(&to_follow);
+        follower_map.remove(&owner.to_string());
+        self.followings.insert(to_follow.to_string(), follower_map);
     }
 
     pub fn follow(&mut self, owner: &Principal, to_follow: &Principal) {
-        self.add_follower_operation(&owner, &to_follow);
-        self.add_following_operation(&to_follow, &owner);
+        self.add_follower_operation(&to_follow, &owner);
+        self.add_following_operation(&owner, &to_follow);
     }
 
     pub fn un_follow(&mut self, owner: &Principal, to_follow: &Principal) {
-        self.remove_follower_operation(&owner, &to_follow);
-        self.remove_following_operation(&to_follow, &owner);
+        self.remove_follower_operation(&to_follow, &owner);
+        self.remove_following_operation(&owner, &to_follow);
     }
 
     pub fn get_profile_follower_counts(&self, owner: &Principal) -> usize {
