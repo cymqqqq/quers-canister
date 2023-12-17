@@ -11,7 +11,7 @@ fn init_state(args: Args) -> Response {
 }
 
 fn init_state_impl(args: &Args, state: &mut RuntimeState) -> Response {
-    let now = state.env.now();
+    // let now = state.env.now();
     let profile = Profile::default();
     state.data.users.profile.insert(args.owner, profile);
     Success(SuccessResult {

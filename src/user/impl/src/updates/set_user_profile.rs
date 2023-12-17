@@ -1,7 +1,7 @@
 use crate::{mutate_state, RuntimeState};
-use crate::guards::caller_is_quers_user;
+// use crate::guards::caller_is_quers_user;
 use ic_cdk_macros::update;
-use user_canister::set_user_profile::{Args, Response::*,*};
+use user_canister::set_user_profile::*;
 
 #[update]
 fn set_user_profile(args: Args) -> Response {

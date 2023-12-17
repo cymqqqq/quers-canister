@@ -2,7 +2,7 @@ use crate::{read_state, RuntimeState};
 // use crate::guards::caller_is_quers_user;
 use ic_cdk_macros::query;
 use user_canister::view_by_page::{Args, Response::*,*};
-use utils::types::*;
+// use utils::types::*;
 // #[query(guard="caller_is_quers_user")]
 #[query]
 fn view_by_page(args: Args) -> Response {

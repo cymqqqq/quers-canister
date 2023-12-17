@@ -1,10 +1,10 @@
 use crate::lifecycle::{init_env, init_state, UPGRADE_BUFFER_SIZE};
-use crate::memory::{get_upgrade_memory, reset_memory_manager};
+// use crate::memory::{get_upgrade_memory, reset_memory_manager};
 use crate::{mutate_state, Data, RuntimeState, take_state};
 use ic_cdk_macros::post_upgrade;
 use ic_stable_structures::reader::{BufferedReader, Reader};
-use tracing::info;
-use utils::serializer;
+// use tracing::info;
+// use utils::serializer;
 use ic_cdk;
 
 // #[post_upgrade]

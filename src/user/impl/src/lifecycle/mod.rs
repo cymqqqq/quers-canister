@@ -19,7 +19,7 @@ fn init_env() -> Box<CanisterEnv> {
 }
 
 fn init_state(env: Box<dyn Environment>, data: Data) {
-    let now = env.now();
+    // let now = env.now();
     let state = RuntimeState::new(env, data);
     crate::init_state(state);
 }

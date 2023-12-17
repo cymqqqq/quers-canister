@@ -3,7 +3,7 @@ use crate::{read_state, RuntimeState};
 use ic_cdk_macros::query;
 use user_canister::get_user_profile::{Args, Response::*,*};
 // use crate::model::profile::Profile;
-use utils::types::*;
+// use utils::types::*;
 // #[query(guard="caller_is_quers_user")]
 #[query]
 fn get_user_profile(args: Args) -> Response {

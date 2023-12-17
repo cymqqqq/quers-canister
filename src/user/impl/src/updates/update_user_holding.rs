@@ -1,7 +1,7 @@
-use crate::{mutate_state, replace_state, RuntimeState};
-use crate::guards::caller_is_quers_user;
+use crate::{mutate_state, RuntimeState};
+// use crate::guards::caller_is_quers_user;
 use ic_cdk_macros::update;
-use user_canister::update_user_holding::{Args, Response::*,*};
+use user_canister::update_user_holding::*;
 
 #[update]
 fn update_user_holding(args: Args) -> Response {

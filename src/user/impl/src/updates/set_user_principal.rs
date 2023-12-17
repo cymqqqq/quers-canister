@@ -1,7 +1,7 @@
 use crate::{mutate_state, RuntimeState};
-use crate::guards::caller_is_quers_user;
+// use crate::guards::caller_is_quers_user;
 use ic_cdk_macros::update;
-use user_canister::set_user_principal::{Args, Response::*,*};
+use user_canister::set_user_principal::*;
 
 // #[update(guard="caller_is_quers_user")]
 #[update]

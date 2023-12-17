@@ -1,7 +1,7 @@
-use crate::{mutate_state, replace_state, RuntimeState};
-use crate::guards::caller_is_quers_user;
+use crate::{mutate_state, RuntimeState};
+// use crate::guards::caller_is_quers_user;
 use ic_cdk_macros::update;
-use user_canister::update_user_tvl::{Args, Response::*,*};
+use user_canister::update_user_tvl::*;
 
 #[update]
 fn update_user_tvl(args: Args) -> Response {

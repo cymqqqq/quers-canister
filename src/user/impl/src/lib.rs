@@ -223,7 +223,7 @@ impl Data {
         answer_pid: &Principal) -> Vec<Comment> {
         let question = self.get_question_by_id(&question_id);
 
-        let answer= match self.question.get_answer_by_principal(&answer_pid)  
+        let answer= match question.get_answer_by_principal(&answer_pid)  
         {
             Some(answer_internal) => answer_internal.clone(),
             None => Answer::default(),

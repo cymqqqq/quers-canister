@@ -2,7 +2,7 @@ use crate::{read_state, RuntimeState};
 // use crate::guards::caller_is_quers_user;
 use ic_cdk_macros::query;
 use user_canister::get_question_by_id::{Args, Response::*,*};
-use utils::types::*;
+// use utils::types::*;
 
 #[query]
 fn get_question_by_id(args: Args) -> Response {

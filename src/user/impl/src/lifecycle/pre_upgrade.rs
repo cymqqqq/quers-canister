@@ -1,8 +1,8 @@
-use utils::serializer;
+// use utils::serializer;
 use ic_cdk_macros::pre_upgrade;
-use ic_stable_structures::writer::{BufferedWriter, Writer};
-use crate::memory::get_upgrade_memory;
-use crate::lifecycle::UPGRADE_BUFFER_SIZE;
+// use ic_stable_structures::writer::{BufferedWriter, Writer};
+// use crate::memory::get_upgrade_memory;
+// use crate::lifecycle::UPGRADE_BUFFER_SIZE;
 use tracing::info;
 use crate::{take_state};
 use crate::{Data, RuntimeState};
