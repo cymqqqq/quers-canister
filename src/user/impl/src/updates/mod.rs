@@ -13,3 +13,5 @@ pub mod update_user_tickets;
 pub mod up_vote;
 pub mod down_vote;
 pub mod set_user_profile;
+pub mod follow_operation;
+pub mod un_follow_operation;

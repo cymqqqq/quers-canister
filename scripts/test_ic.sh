@@ -23,17 +23,17 @@ desc="about GameFi, SocialFi, DeFi, Layer2"
 # dfx canister --network ic call user update_user_holding "(record {owner=principal \"$owner\"; holding=12;})"
 # dfx canister --network ic call user get_user_profile "(record {owner=principal \"$owner\";})"
 
-dfx canister --network ic call user add_new_question \
-"record {question_title=\"$question\"; \
-question_asker= principal \"$owner\"; \
-question_logo=opt \"\"; \
-question_description=\"$desc\"; \
-tags=vec {\"GameFi, SocialFi, DeFi, Layer2\"}; \
-question_image=opt \"\"; \
-}"
+# dfx canister --network ic call user add_new_question \
+# "record {question_title=\"$question\"; \
+# question_asker= principal \"$owner\"; \
+# question_logo=opt \"\"; \
+# question_description=\"$desc\"; \
+# tags=vec {\"GameFi, SocialFi, DeFi, Layer2\"}; \
+# question_image=opt \"\"; \
+# }"
 
-
-# dfx canister --network ic call user get_all_question_list "record {}"
+# 
+dfx canister --network ic call user get_all_question_list "record {}"
 
 
 # http://bitask.club:3001/homepage/viewByPage?sort=1&page=72&limit=10 404 (Not Found)

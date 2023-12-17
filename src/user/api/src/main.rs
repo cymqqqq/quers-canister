@@ -32,6 +32,10 @@ fn main() {
 
     generate_candid_method!(user, add_new_comment, update);
     generate_candid_method!(user, get_all_comment_list, query);
+
+    // follow state
+    generate_candid_method!(user, follow_operation, update);
+    generate_candid_method!(user, un_follow_operation, update);
     candid::export_service!();
     std::print!("{}", __export_service());
 }

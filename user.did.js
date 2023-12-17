@@ -39,6 +39,10 @@ export const idlFactory = ({ IDL }) => {
     'DownVoteInvalid' : IDL.Null,
     'Success' : IDL.Null,
   });
+  const Args_5 = IDL.Record({
+    'owner' : IDL.Principal,
+    'to_follow' : IDL.Principal,
+  });
   const Comment = IDL.Record({
     'comment_content' : IDL.Text,
     'comment_date' : IDL.Text,
@@ -54,7 +58,7 @@ export const idlFactory = ({ IDL }) => {
   });
   const SuccessResult = IDL.Record({ 'answer_list' : IDL.Vec(Answer) });
   const Response_4 = IDL.Variant({ 'Success' : SuccessResult });
-  const Args_5 = IDL.Record({
+  const Args_6 = IDL.Record({
     'question_id' : IDL.Text,
     'answer_pid' : IDL.Principal,
   });
@@ -82,11 +86,6 @@ export const idlFactory = ({ IDL }) => {
   const Response_8 = IDL.Variant({ 'Success' : SuccessResult_4 });
   const SuccessResult_5 = IDL.Record({ 'votes' : IDL.Nat32 });
   const Response_9 = IDL.Variant({ 'Success' : SuccessResult_5 });
-  const Args_6 = IDL.Record({ 'owner' : IDL.Principal });
-  const SuccessResult_6 = IDL.Record({ 'followers' : IDL.Nat32 });
-  const Response_10 = IDL.Variant({ 'Success' : SuccessResult_6 });
-  const SuccessResult_7 = IDL.Record({ 'following' : IDL.Nat32 });
-  const Response_11 = IDL.Variant({ 'Success' : SuccessResult_7 });
   const Args_7 = IDL.Record({ 'owner' : IDL.Principal });
   const QuesAns = IDL.Record({
     'answers' : IDL.Vec(Answer),
@@ -103,15 +102,13 @@ export const idlFactory = ({ IDL }) => {
     'description' : IDL.Text,
     'holders' : IDL.Nat32,
     'holding' : IDL.Nat32,
-    'followers' : IDL.Nat32,
-    'following' : IDL.Nat32,
   });
-  const SuccessResult_8 = IDL.Record({ 'profile' : Profile });
-  const Response_12 = IDL.Variant({ 'Success' : SuccessResult_8 });
+  const SuccessResult_6 = IDL.Record({ 'profile' : Profile });
+  const Response_10 = IDL.Variant({ 'Success' : SuccessResult_6 });
   const Args_8 = IDL.Record({ 'owner' : IDL.Principal });
-  const SuccessResult_9 = IDL.Record({ 'principal' : IDL.Principal });
-  const Response_13 = IDL.Variant({ 'Success' : SuccessResult_9 });
-  const Response_14 = IDL.Variant({
+  const SuccessResult_7 = IDL.Record({ 'principal' : IDL.Principal });
+  const Response_11 = IDL.Variant({ 'Success' : SuccessResult_7 });
+  const Response_12 = IDL.Variant({
     'Success' : IDL.Null,
     'PrincipalInvalid' : IDL.Null,
   });
@@ -121,17 +118,17 @@ export const idlFactory = ({ IDL }) => {
     'name' : IDL.Text,
     'description' : IDL.Text,
   });
-  const Response_15 = IDL.Variant({
+  const Response_13 = IDL.Variant({
     'Success' : IDL.Null,
     'PrincipalInvalid' : IDL.Null,
   });
   const Args_10 = IDL.Record({ 'question_id' : IDL.Text });
-  const Response_16 = IDL.Variant({
+  const Response_14 = IDL.Variant({
     'Success' : IDL.Null,
     'UpVoteInvalid' : IDL.Null,
   });
   const Args_11 = IDL.Record({ 'owner' : IDL.Principal, 'name' : IDL.Text });
-  const Response_17 = IDL.Variant({
+  const Response_15 = IDL.Variant({
     'TvlInvalid' : IDL.Null,
     'Success' : IDL.Null,
   });
@@ -139,67 +136,52 @@ export const idlFactory = ({ IDL }) => {
     'owner' : IDL.Principal,
     'description' : IDL.Text,
   });
-  const Response_18 = IDL.Variant({
+  const Response_16 = IDL.Variant({
     'DescriptionInvalid' : IDL.Null,
     'Success' : IDL.Null,
   });
   const Args_13 = IDL.Record({
     'owner' : IDL.Principal,
-    'followers' : IDL.Nat32,
-  });
-  const Response_19 = IDL.Variant({
-    'Success' : IDL.Null,
-    'FollowersInvalid' : IDL.Null,
-  });
-  const Args_14 = IDL.Record({
-    'owner' : IDL.Principal,
-    'following' : IDL.Nat32,
-  });
-  const Response_20 = IDL.Variant({
-    'Success' : IDL.Null,
-    'FollowingInvalid' : IDL.Null,
-  });
-  const Args_15 = IDL.Record({
-    'owner' : IDL.Principal,
     'holders' : IDL.Nat32,
   });
-  const Response_21 = IDL.Variant({
+  const Response_17 = IDL.Variant({
     'Success' : IDL.Null,
     'HoldersInvalid' : IDL.Null,
   });
-  const Args_16 = IDL.Record({
+  const Args_14 = IDL.Record({
     'owner' : IDL.Principal,
     'holding' : IDL.Nat32,
   });
-  const Args_17 = IDL.Record({
+  const Args_15 = IDL.Record({
     'tickets' : IDL.Nat32,
     'owner' : IDL.Principal,
   });
-  const Args_18 = IDL.Record({ 'tvl' : IDL.Nat32, 'owner' : IDL.Principal });
-  const Args_19 = IDL.Record({
+  const Args_16 = IDL.Record({ 'tvl' : IDL.Nat32, 'owner' : IDL.Principal });
+  const Args_17 = IDL.Record({
     'username' : IDL.Text,
     'owner' : IDL.Principal,
   });
-  const Args_20 = IDL.Record({
+  const Args_18 = IDL.Record({
     'num_of_page' : IDL.Opt(IDL.Nat64),
     'page' : IDL.Nat64,
   });
-  const SuccessResult_10 = IDL.Record({
+  const SuccessResult_8 = IDL.Record({
     'question_list' : IDL.Tuple(IDL.Int32, IDL.Vec(Question)),
   });
-  const Response_22 = IDL.Variant({ 'Success' : SuccessResult_10 });
+  const Response_18 = IDL.Variant({ 'Success' : SuccessResult_8 });
   return IDL.Service({
     'add_new_answer' : IDL.Func([Args], [Response], []),
     'add_new_comment' : IDL.Func([Args_1], [Response], []),
     'add_new_question' : IDL.Func([Args_2], [Response_1], []),
     'add_profile_watch_list' : IDL.Func([Args_3], [Response_2], []),
     'down_vote' : IDL.Func([Args_4], [Response_3], []),
+    'follow_operation' : IDL.Func([Args_5], [Response_3], []),
     'get_all_answers_list_by_question_id' : IDL.Func(
         [Args_4],
         [Response_4],
         ['query'],
       ),
-    'get_all_comment_list' : IDL.Func([Args_5], [Response_5], ['query']),
+    'get_all_comment_list' : IDL.Func([Args_6], [Response_5], ['query']),
     'get_all_question_id_list' : IDL.Func(
         [IDL.Record({})],
         [Response_6],
@@ -212,23 +194,20 @@ export const idlFactory = ({ IDL }) => {
       ),
     'get_question_by_id' : IDL.Func([Args_4], [Response_8], ['query']),
     'get_question_votes_by_id' : IDL.Func([Args_4], [Response_9], ['query']),
-    'get_user_followers' : IDL.Func([Args_6], [Response_10], ['query']),
-    'get_user_following' : IDL.Func([Args_6], [Response_11], ['query']),
-    'get_user_profile' : IDL.Func([Args_7], [Response_12], ['query']),
-    'init_state' : IDL.Func([Args_8], [Response_13], ['query']),
-    'set_user_principal' : IDL.Func([Args_8], [Response_14], []),
-    'set_user_profile' : IDL.Func([Args_9], [Response_15], []),
-    'up_vote' : IDL.Func([Args_10], [Response_16], []),
-    'update_name' : IDL.Func([Args_11], [Response_17], []),
-    'update_profile_description' : IDL.Func([Args_12], [Response_18], []),
-    'update_user_followers' : IDL.Func([Args_13], [Response_19], []),
-    'update_user_following' : IDL.Func([Args_14], [Response_20], []),
-    'update_user_holders' : IDL.Func([Args_15], [Response_21], []),
-    'update_user_holding' : IDL.Func([Args_16], [Response_17], []),
-    'update_user_tickets' : IDL.Func([Args_17], [Response_17], []),
-    'update_user_tvl' : IDL.Func([Args_18], [Response_17], []),
-    'update_username' : IDL.Func([Args_19], [Response_17], []),
-    'view_by_page' : IDL.Func([Args_20], [Response_22], ['query']),
+    'get_user_profile' : IDL.Func([Args_7], [Response_10], ['query']),
+    'init_state' : IDL.Func([Args_8], [Response_11], ['query']),
+    'set_user_principal' : IDL.Func([Args_8], [Response_12], []),
+    'set_user_profile' : IDL.Func([Args_9], [Response_13], []),
+    'un_follow_operation' : IDL.Func([Args_5], [Response_3], []),
+    'up_vote' : IDL.Func([Args_10], [Response_14], []),
+    'update_name' : IDL.Func([Args_11], [Response_15], []),
+    'update_profile_description' : IDL.Func([Args_12], [Response_16], []),
+    'update_user_holders' : IDL.Func([Args_13], [Response_17], []),
+    'update_user_holding' : IDL.Func([Args_14], [Response_15], []),
+    'update_user_tickets' : IDL.Func([Args_15], [Response_15], []),
+    'update_user_tvl' : IDL.Func([Args_16], [Response_15], []),
+    'update_username' : IDL.Func([Args_17], [Response_15], []),
+    'view_by_page' : IDL.Func([Args_18], [Response_18], ['query']),
   });
 };
 export const init = ({ IDL }) => { return []; };
