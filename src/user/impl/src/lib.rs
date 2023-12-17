@@ -41,6 +41,7 @@ struct Data {
     pub homepage: HomePage,
     pub question: Question,
     pub answer: Answer,
+    pub follow_state: Follow,
 }
 
 
@@ -51,6 +52,7 @@ impl Data {
             homepage: HomePage::default(),
             question: Question::default(),
             answer: Answer::default(),
+            follow_state: Follow::default(),
         }
     }
 
@@ -229,6 +231,14 @@ impl Data {
             None => Answer::default(),
         };
         answer.get_all_comment_list()
+    }
+
+    pub fn follow_operation(&mut self, owner: &Principal, to_follow: &Principal) {
+        self.follow_state.follow(&owner, &to_follow);
+    }
+
+    pub fn un_follow_operation(&mut self, to_follow: &Principal, owner: &Principal) {
+        self.follow_state.un_follow(&to_follow, &owner);
     }
 
 }
