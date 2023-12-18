@@ -35,6 +35,7 @@ fn post_upgrade() {
                    
                     format!(
                         "An error occurred when loading from stable memory (post_upgrade): {:?}",
+                
                         err
                     );
                     (Data::new(), )

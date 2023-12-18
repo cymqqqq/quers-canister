@@ -1,10 +1,10 @@
 
 
-owner="kkwoi-3jebw-6qx6z-yeah7-pgtlm-gbqdm-kkvyt-eqgbl-x3vpw-wfu2w-rqe"
+owner="wgcif-hsynd-rl4ww-aj6ok-d7a4a-c3wyz-4obd3-zcqk3-ul4ww-s3f73-qae"
 question="GameFi, SocialFi, DeFi, Layer2, and new blockchains – which  sector do you think is more likely to emerge as the ultimate winner in  the next bull market?"
 desc="about GameFi, SocialFi, DeFi, Layer2"
 # dfx canister --network ic call user init_state "(record {owner=principal \"$owner\";})"
-# dfx canister --network ic call user get_user_profile "(record {owner=principal \"$owner\";})"
+dfx canister --network ic call user get_user_profile "(record {owner=principal \"$owner\";})"
 # dfx canister --network ic call user set_user_principal "(record {owner=principal \"$owner\";})"
 # dfx canister --network ic call user update_profile_description "(record {owner=principal \"$owner\"; description=\"hello world\";})"
 

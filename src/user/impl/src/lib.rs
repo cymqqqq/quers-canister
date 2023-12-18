@@ -241,6 +241,14 @@ impl Data {
         self.follow_state.un_follow(&to_follow, &owner);
     }
 
+    pub fn get_profile_followers_count(&self, owner: &Principal) -> usize {
+        self.follow_state.get_profile_follower_counts(&owner)
+    }
+
+    pub fn get_profile_followings_count(&self, owner: &Principal) -> usize {
+        self.follow_state.get_profile_following_counts(&owner)
+    }
+
 }
 
 
