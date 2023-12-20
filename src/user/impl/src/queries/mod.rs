@@ -9,3 +9,6 @@ pub mod view_by_page;
 pub mod get_all_question_id_list;
 pub mod get_profile_followers_count;
 pub mod get_profile_followings_count;
+pub mod get_profile_question_list;
+pub mod get_profile_answer_question_list;
+pub mod get_profile_watch_list;
