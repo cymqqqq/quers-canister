@@ -27,42 +27,33 @@ use ic_cdk;
 #[post_upgrade]
 fn post_upgrade() {
     let env = init_env();
-    let (data_store, ) = match ic_cdk::storage::stable_restore::<(
-        Data,
-    )>() {
-                Ok((data_store, )) => (data_store, ),
-                Err(err) => {
-                   
-                    format!(
-                        "An error occurred when loading from stable memory (post_upgrade): {:?}",
-                
-                        err
-                    );
-                    (Data::new(), )
-                }
-            };
-    init_state(env, data_store.clone());
+    // let (data_store, ) = ic_cdk::storage::stable_restore::<(
+    //     Data,
+    // )>().unwrap();
     // let state = take_state();
+    let mut data_backup: Data = Data::new();
     mutate_state(|state| {
         
         
-        state.data = data_store;
+        // state.data = data_store;
         
-    //     match ic_cdk::storage::stable_restore::<(
-    //         Data,
-    //     )>() {
-    //         Ok((data_store, )) => {
-    //             // init_state(env, data_store.clone());
-    //             state.data = data_store;
-                
-    //         }
-    //         Err(err) => {
+
+        match ic_cdk::storage::stable_restore::<(
+            Data,
+        )>() {
+            Ok((data_store, )) => {
+                state.data = data_store.clone();
+                data_backup = data_store;
+            }
+            Err(err) => {
                
-    //             format!(
-    //                 "An error occurred when loading from stable memory (post_upgrade): {:?}",
-    //                 err
-    //             );
-    //         }
-    //     }
+                format!(
+                    "An error occurred when loading from stable memory (post_upgrade): {:?}",
+                    err
+                );
+            }
+        }
     });
+    init_state(env, data_backup.clone());
+
 }

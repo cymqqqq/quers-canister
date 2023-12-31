@@ -14,6 +14,7 @@ fn set_user_profile_impl(args: &Args, state: &mut RuntimeState) -> Response {
         &args.description, 
         &args.name,
         &args.username,
+        &args.profile_image_url,
     );
     Response::Success
 }

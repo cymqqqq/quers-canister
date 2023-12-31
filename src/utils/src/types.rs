@@ -24,6 +24,7 @@ pub struct Profile {
     pub owner: String,
     pub tvl: u32,
     pub description: String,
+    pub profile_image_url: String,
     pub holders: u32,
     pub holding: u32,
     pub qa_mod: QuesAns,
@@ -68,21 +69,21 @@ impl HomePage {
 
     pub fn update_question_by_id(&mut self, 
                 question_id: &String,
-                question: &Question
+                question: Question
     )
     {
-        self.question_list.insert(question_id.to_string(), question.clone());
+        self.question_list.insert(question_id.to_string(), question);
     }
 }
 
 #[derive(Debug, Clone, CandidType, Serialize, Deserialize)]
 pub struct Question {
     pub question_id: String,
-    pub question_logo: Option<String>,
+    pub question_logo: String,
     pub question_title: String,
     pub question_description: String,
     pub question_date: String,
-    pub question_image: Option<String>,
+    pub question_image: String,
     pub question_asker: String,
     pub votes: u32,
     pub tags: Vec<String>,
@@ -94,11 +95,11 @@ impl Default for Question {
     fn default() -> Self {
         Self {
             question_id: "".to_string(),
-            question_logo: Some("".to_string()),
+            question_logo: "".to_string(),
             question_title: "".to_string(),
             question_description: "".to_string(),
             question_date: now_nanos().to_string(),
-            question_image: Some("".to_string()),
+            question_image: "".to_string(),
             question_asker: Principal::anonymous().to_string(),
             votes: 0u32,
             tags: Vec::new(),
@@ -111,8 +112,8 @@ impl Question {
     pub fn new(question_id: &String,
                 question_title: String, 
                 question_description: String,
-                question_logo: Option<String>,
-                question_image: Option<String>,
+                question_logo: String,
+                question_image: String,
                 question_asker: Principal,
                 tags: Vec<String>,
     ) -> Self {
@@ -130,8 +131,8 @@ impl Question {
         }
     }
 
-    pub fn answer_question(&mut self, aq_pid: Principal, answer: &Answer) {
-        self.answers.insert(aq_pid.to_string(), answer.clone());
+    pub fn answer_question(&mut self, aq_pid: Principal, answer: Answer) {
+        self.answers.insert(aq_pid.to_string(), answer);
     }
 
     pub fn get_answer_by_principal(&self, principal: &Principal) -> Option<&Answer> {
@@ -242,46 +243,46 @@ impl Comment {
 }
 #[derive(Debug, Clone, Deserialize, CandidType, Serialize)]
 pub struct QuesAns {
-    pub questions: Vec<Question>,
-    pub answers: Vec<Answer>,
-    pub watch_list:Vec<String>,
+    pub questions: HashSet<String>,
+    pub answers: HashSet<String>,
+    pub watch_list:HashSet<String>,
 }
 
 impl Default for QuesAns {
     fn default() -> Self {
         Self {
-            questions: Vec::new(),
-            answers: Vec::new(),
-            watch_list: Vec::new(),
+            questions: HashSet::new(),
+            answers: HashSet::new(),
+            watch_list: HashSet::new(),
         }
     }
 }
 
 impl QuesAns {
     // update method
-    pub fn add_profile_question(&mut self, question: &Question) {
-        self.questions.push(question.clone());
+    pub fn add_profile_question_id(&mut self, question_id: &String) {
+        self.questions.insert(question_id.to_string());
     }
 
-    pub fn add_profile_answer(&mut self, answer: &Answer) {
-        self.answers.push(answer.clone());
+    pub fn add_profile_answer_id(&mut self, answer_question_id: &String) {
+        self.answers.insert(answer_question_id.to_string());
     }
 
     pub fn add_watch_list(&mut self, question_id: &String) {
-        self.watch_list.push(question_id.into());
+        self.watch_list.insert(question_id.into());
     }
 
     // query method
-    pub fn get_all_profile_questions_list(self) -> Vec<Question> {
-        self.questions
+    pub fn get_all_profile_questions_id_list(self) -> Vec<String> {
+        self.questions.into_iter().collect()
     }
 
-    pub fn get_all_profile_answers_list(self) -> Vec<Answer> {
-        self.answers
+    pub fn get_all_profile_answers_id_list(self) -> Vec<String> {
+        self.answers.into_iter().collect()
     }
 
     pub fn get_all_profile_watch_list(self) -> Vec<String> {
-        self.watch_list
+        self.watch_list.into_iter().collect()
     }
 }
 
@@ -291,6 +292,7 @@ impl Default for Profile {
                  owner: Principal::anonymous().to_string(), 
                  tvl: 0u32, 
                  description: "".into(), 
+                 profile_image_url: "".into(),
                  holders: 0u32, 
                  holding: 0u32,
                  qa_mod: QuesAns::default(),
@@ -309,12 +311,13 @@ impl Profile {
         description: String, 
         name: String,
         username: String,
-
+        profile_image_url: String,
     ) -> Self {
         Self {
             owner: owner.to_text(),
             tvl: 0u32,
             description: description,
+            profile_image_url: profile_image_url,
             holders: 0u32,
             holding: 0u32,
             tickets: 0u32,
@@ -329,6 +332,10 @@ impl Profile {
     }
     pub fn update_profile_description(&mut self, desc: &String) {
         self.description = desc.into();
+    }
+
+    pub fn update_profile_image_url(&mut self, profile_image_url: &String) {
+        self.profile_image_url = profile_image_url.into();
     }
 
     pub fn update_profile_tvl(&mut self, tvl: &u32) {
@@ -355,12 +362,12 @@ impl Profile {
         self.holding += holding;
     }
 
-    pub fn add_profile_question(&mut self, question: &Question) {
-        self.qa_mod.add_profile_question(&question);
+    pub fn add_profile_question_id(&mut self, question_id: &String) {
+        self.qa_mod.add_profile_question_id(&question_id);
     }
 
-    pub fn add_profile_answer(&mut self, answer: &Answer) {
-        self.qa_mod.add_profile_answer(&answer);
+    pub fn add_profile_answer_id(&mut self, question_answer_id: &String) {
+        self.qa_mod.add_profile_answer_id(&question_answer_id);
     }
 
     pub fn add_watch_list(&mut self, question_id: &String) {
@@ -368,20 +375,28 @@ impl Profile {
     }
     // query method
 
-    pub fn get_profile_description(&self) -> String {
-        self.description.clone()
+    pub fn get_profile_description(self) -> String {
+        self.description
     }
 
-    pub fn get_profile_tvl(&self) -> u32 {
-        self.tvl.into()
+    pub fn get_profile_tvl(self) -> u32 {
+        self.tvl
     }
 
-    pub fn get_profile_holders(&self) -> u32 {
-        self.holders.into()
+    pub fn get_profile_holders(self) -> u32 {
+        self.holders
     }
 
-    pub fn get_profile_holding(&self) -> u32 {
-        self.holding.into()
+    pub fn get_profile_holding(self) -> u32 {
+        self.holding
+    }
+
+    pub fn get_profile_question_id_list(self) -> Vec<String> {
+        self.qa_mod.get_all_profile_questions_id_list()
+    }
+
+    pub fn get_all_profile_answer_question_id_list(self) -> Vec<String> {
+        self.qa_mod.get_all_profile_questions_id_list()
     }
 
     pub fn get_profile_watch_list(self) -> Vec<String> {

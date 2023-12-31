@@ -39,6 +39,10 @@ fn main() {
     // get follow state operation
     generate_candid_method!(user, get_profile_followers_count, query);
     generate_candid_method!(user, get_profile_followings_count, query);
+    // get profile question list
+    generate_candid_method!(user, get_profile_question_list, query);
+    generate_candid_method!(user, get_profile_answer_question_list, query);
+    generate_candid_method!(user, get_profile_watch_list, query);
     candid::export_service!();
     std::print!("{}", __export_service());
 }

@@ -1,8 +1,8 @@
 use canister_library::canister_state;
 use crate::model::profile::UserIndex;
 use candid::Principal;
-use candid::CandidType;
-use serde::{Deserialize, Serialize};
+use candid::{CandidType, Deserialize};
+use serde::{ Serialize};
 // use std::cell::RefCell;
 // use std::collections::{HashMap, HashSet};
 use utils::env::Environment;
@@ -92,15 +92,17 @@ impl Data {
         owner: &Principal,
         description: &String,
         name: &String,
-        username: &String
+        username: &String,
+        profile_image_url: &String,
         ) {
         let profile = Profile::new(
             *owner,
             description.to_string(),
             name.to_string(),
-            username.to_string()
+            username.to_string(),
+            profile_image_url.to_string(),
         );
-        self.users.set_user_profile(&profile);
+        self.users.set_user_profile(profile);
     }
 
     pub fn get_all_question_list(&self) -> Vec<Question> {
@@ -120,16 +122,26 @@ impl Data {
         tags: &Vec<String>,
     ) {
         let q_id = new_qid();
+        let q_logo = match question_logo {
+            Some(logo) => logo.to_string(),
+            None => "".to_string(),
+        };
+
+        let q_image = match question_image {
+            Some(image) => image.to_string(),
+            None => "".to_string(),
+        };
+
         let question_obj = Question::new(
             &q_id,
             question_title.to_string(),
                 question_description.to_string(),
-                question_logo.clone(),
-                question_image.clone(),
+                q_logo,
+                q_image,
                 *question_asker,
                 tags.to_vec(),
         );
-        self.users.update_user_question_list(&question_asker, &question_obj);
+        self.users.update_user_question_id_list(&question_asker, &q_id);
         self.homepage.ask_question(&q_id, question_obj);
     }
 
@@ -149,22 +161,21 @@ impl Data {
     pub fn up_vote(&mut self, question_id: &String) {
         let mut question = self.get_question_by_id(&question_id);
         question.up_vote();
-        self.homepage.update_question_by_id(&question_id, &question);
+        self.homepage.update_question_by_id(&question_id, question);
 
     }
 
     pub fn down_vote(&mut self, question_id: &String) {
         let mut question = self.get_question_by_id(&question_id);
         question.down_vote();
-        self.homepage.update_question_by_id(&question_id, &question);
+        self.homepage.update_question_by_id(&question_id, question);
     }
     pub fn view_by_page(&self, page: usize , num_of_page: Option<usize>) -> (i32, Vec<Question>) {
         assert!(page > 0);
     
         let num_of_page = num_of_page.unwrap_or(10usize);
         let question_list = self.homepage.get_all_question_list();
-        // EVENTS.with(|events| {
-            // let v = events.clone().into_inner();
+       
             let start = (page - 1) * num_of_page;
             let end = std::cmp::min(question_list.len(), page * num_of_page);
             assert!(start < end);
@@ -172,7 +183,6 @@ impl Data {
             let mut v_rev = question_list[start..end].to_vec();
             v_rev.reverse();
             (question_list[start..end].len() as i32, v_rev)
-        // })
     }
 
     pub fn get_question_votes_by_id(&self, question_id: &String) -> u32 {
@@ -191,9 +201,9 @@ impl Data {
             answer_content.to_string(),
             *answer_pid,
         );
-        self.users.update_user_answer_list(&answer_pid, &answer);
-        question.answer_question(*answer_pid, &answer);
-        self.homepage.update_question_by_id(&question_id, &question);
+        self.users.update_user_answer_id_list(&answer_pid, &question_id);
+        question.answer_question(*answer_pid, answer);
+        self.homepage.update_question_by_id(&question_id, question);
     }
 
     pub fn get_all_answers_list_by_question_id(&self, question_id: &String) -> Vec<Answer> {
@@ -215,8 +225,8 @@ impl Data {
 
         let new_comment = Comment::new(*comment_pid, comment_content.to_string());
         answer.add_comment(*comment_pid, new_comment);
-        question.answer_question(*answer_pid, &answer);
-        self.homepage.update_question_by_id(&question_id, &question);
+        question.answer_question(*answer_pid, answer);
+        self.homepage.update_question_by_id(&question_id, question);
 
     }
 
@@ -247,6 +257,32 @@ impl Data {
 
     pub fn get_profile_followings_count(&self, owner: &Principal) -> usize {
         self.follow_state.get_profile_following_counts(&owner)
+    }
+    // get profile question list
+    pub fn get_profile_question_list(&self, owner: &Principal) -> Vec<Question> {
+        self.users
+        .get_all_profile_questions_id_list(&owner)
+        .iter()
+        .map(|question_id| self.get_question_by_id(question_id))
+        .collect()
+
+    }
+    // get profile answer question list
+    pub fn get_profile_answer_question_list(&self, owner: &Principal) -> Vec<Question> {
+        self.users
+        .get_all_profile_answers_id_list(&owner)
+        .iter()
+        .map(|question_answer_id| self.get_question_by_id(question_answer_id))
+        .collect()
+    }
+
+    // get profile watch list 
+    pub fn get_profile_watch_list(&self, owner: &Principal) -> Vec<Question> {
+        self.users
+        .get_all_profile_watch_list(&owner)
+        .iter()
+        .map(|watch_list_id| self.get_question_by_id(watch_list_id))
+        .collect()
     }
 
 }

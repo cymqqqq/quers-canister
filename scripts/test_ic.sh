@@ -32,7 +32,6 @@ dfx canister --network ic call user get_user_profile "(record {owner=principal \
 # question_image=opt \"\"; \
 # }"
 
-# 
 dfx canister --network ic call user get_all_question_list "record {}"
 
 

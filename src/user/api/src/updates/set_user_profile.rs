@@ -7,6 +7,7 @@ pub struct Args {
     pub description: String, 
     pub name: String,
     pub username: String,
+    pub profile_image_url: String,
 }
 
 #[derive(CandidType, Serialize, Deserialize, Debug)]
