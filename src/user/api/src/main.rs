@@ -14,7 +14,7 @@ fn main() {
     generate_candid_method!(user, add_profile_watch_list, update);
 
     generate_candid_method!(user, update_user_tvl, update);
-    generate_candid_method!(user, set_user_principal, update);
+    // generate_candid_method!(user, set_user_principal, update);
     generate_candid_method!(user, update_profile_description, update);
 
     generate_candid_method!(user, add_new_question, update);
@@ -43,6 +43,9 @@ fn main() {
     generate_candid_method!(user, get_profile_question_list, query);
     generate_candid_method!(user, get_profile_answer_question_list, query);
     generate_candid_method!(user, get_profile_watch_list, query);
+    // get profile follow state
+    generate_candid_method!(user, get_profile_followers_set, query);
+    generate_candid_method!(user, get_profile_followings_set, query);
     candid::export_service!();
     std::print!("{}", __export_service());
 }

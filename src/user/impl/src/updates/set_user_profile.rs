@@ -10,7 +10,7 @@ fn set_user_profile(args: Args) -> Response {
 
 fn set_user_profile_impl(args: &Args, state: &mut RuntimeState) -> Response {
     state.data.set_user_profile(
-        &args.owner,
+        args.owner,
         &args.description, 
         &args.name,
         &args.username,

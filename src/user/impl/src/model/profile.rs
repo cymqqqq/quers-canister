@@ -16,9 +16,8 @@ impl UserIndex {
         Self { profile: HashMap::new(), }
     }
 
-    pub fn set_user_profile(&mut self, profile: Profile) {
-        let principal = Principal::from_text(&profile.owner).unwrap();
-        self.profile.insert(principal, profile);
+    pub fn set_user_profile(&mut self, owner: Principal, profile: Profile) {
+        self.profile.insert(owner, profile);
 
     }
     pub fn get_user_profile(&self, principal: &Principal) -> Profile {
@@ -28,12 +27,12 @@ impl UserIndex {
         }
     }
 
-    pub fn set_user_principal(&mut self, principal: &Principal) {
-        let mut profile_map = self.get_user_profile(&principal);
-        profile_map.set_user_principal(principal);
-        self.profile.insert(*principal, profile_map);
+    // pub fn set_user_principal(&mut self, principal: &Principal) {
+    //     let mut profile_map = self.get_user_profile(&principal);
+    //     profile_map.set_user_principal(principal);
+    //     self.profile.insert(*principal, profile_map);
 
-    }
+    // }
 
     pub fn update_user_description(&mut self, owner: &Principal, description: &String) {
         let mut profile_map = self.get_user_profile(&owner);

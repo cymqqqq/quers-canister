@@ -9,11 +9,12 @@ macro_rules! canister_state {
 
         fn init_state(state: $type) {
             __STATE.with(|s| {
-                if s.borrow().is_some() {
-                    panic!("{}", __STATE_ALREADY_INITIALIZED);
-                } else {
-                    *s.borrow_mut() = Some(state);
-                }
+                // if s.borrow().is_some() {
+                //     panic!("{}", __STATE_ALREADY_INITIALIZED);
+                // } else {
+                //     *s.borrow_mut() = Some(state);
+                // }
+                *s.borrow_mut() = Some(state);
             });
         }
 

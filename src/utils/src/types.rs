@@ -21,7 +21,7 @@ pub fn new_qid() -> String {
 
 #[derive(Debug, Clone, Serialize, Deserialize, CandidType)]
 pub struct Profile {
-    pub owner: String,
+    // pub owner: String,
     pub tvl: u32,
     pub description: String,
     pub profile_image_url: String,
@@ -87,6 +87,8 @@ pub struct Question {
     pub question_asker: String,
     pub votes: u32,
     pub tags: Vec<String>,
+    pub reference_link: String,
+    pub reference_title: String,
     pub answers: HashMap<String, Answer>,
 }
 
@@ -101,6 +103,8 @@ impl Default for Question {
             question_date: now_nanos().to_string(),
             question_image: "".to_string(),
             question_asker: Principal::anonymous().to_string(),
+            reference_link: "".to_string(),
+            reference_title: "".to_string(),
             votes: 0u32,
             tags: Vec::new(),
             answers: HashMap::new(),
@@ -115,6 +119,8 @@ impl Question {
                 question_logo: String,
                 question_image: String,
                 question_asker: Principal,
+                reference_link: String,
+                reference_title: String,
                 tags: Vec<String>,
     ) -> Self {
         Self {
@@ -125,6 +131,8 @@ impl Question {
             question_description: question_description,
             question_date: now_nanos().to_string(),
             question_asker: question_asker.to_string(),
+            reference_link: reference_link.to_string(),
+            reference_title: reference_title.to_string(),
             votes: 0u32,
             tags: tags,
             answers: HashMap::new(),
@@ -289,7 +297,7 @@ impl QuesAns {
 impl Default for Profile {
     fn default() -> Self {
         Self { 
-                 owner: Principal::anonymous().to_string(), 
+                //  owner: Principal::anonymous().to_string(), 
                  tvl: 0u32, 
                  description: "".into(), 
                  profile_image_url: "".into(),
@@ -307,14 +315,14 @@ impl Default for Profile {
 impl Profile {
     // update method
     pub fn new(
-        owner: Principal, 
+        // owner: Principal, 
         description: String, 
         name: String,
         username: String,
         profile_image_url: String,
     ) -> Self {
         Self {
-            owner: owner.to_text(),
+            // owner: owner.to_text(),
             tvl: 0u32,
             description: description,
             profile_image_url: profile_image_url,
@@ -327,9 +335,9 @@ impl Profile {
         }
     }
 
-    pub fn set_user_principal(&mut self, principal: &Principal) {
-        self.owner = principal.to_string();
-    }
+    // pub fn set_user_principal(&mut self, principal: &Principal) {
+    //     self.owner = principal.to_string();
+    // }
     pub fn update_profile_description(&mut self, desc: &String) {
         self.description = desc.into();
     }
@@ -422,27 +430,27 @@ impl Default for Follow {
 
 impl Follow {
 
-    fn get_followers_set(&self, owner: &Principal) -> HashSet<String> {
+    pub fn get_followers_set(&self, owner: &Principal) -> HashSet<String> {
         match self.followers.get(&owner.to_string()) {
             Some(followers_set) => followers_set.clone(),
             None => HashSet::new(),
         }
     }
 
-    fn get_followings_set(&self, owner: &Principal) -> HashSet<String> {
+    pub fn get_followings_set(&self, owner: &Principal) -> HashSet<String> {
         match self.followings.get(&owner.to_string()) {
             Some(following_set) => following_set.clone(),
             None => HashSet::new(),
         }
     }
 
-    fn add_following_operation(&mut self, owner: &Principal, to_follow: &Principal) {
+    pub fn add_following_operation(&mut self, owner: &Principal, to_follow: &Principal) {
         let mut following_map = self.get_followings_set(&owner);
         following_map.insert(to_follow.to_string());
         self.followings.insert(owner.to_string(), following_map);
     }
 
-    fn add_follower_operation(&mut self, to_follow: &Principal, owner: &Principal) {
+    pub fn add_follower_operation(&mut self, to_follow: &Principal, owner: &Principal) {
         let mut follower_map = self.get_followers_set(&to_follow);
         follower_map.insert(owner.to_string());
         self.followers.insert(to_follow.to_string(), follower_map);

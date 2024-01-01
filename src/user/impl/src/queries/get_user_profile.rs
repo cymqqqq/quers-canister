@@ -11,7 +11,7 @@ fn get_user_profile(args: Args) -> Response {
 }
 
 fn get_user_profile_impl(args: &Args, state: &RuntimeState) -> Response {
-    let profile = state.data.users.get_user_profile(&args.owner);
+    let profile = state.data.get_user_profile(&args.owner);
     Success(SuccessResult{
         profile: profile,
     })

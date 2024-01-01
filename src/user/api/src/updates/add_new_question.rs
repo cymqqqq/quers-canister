@@ -8,6 +8,8 @@ pub struct Args {
     pub question_description: String,
     pub question_image: Option<String>,
     pub question_asker: Principal,
+    pub reference_link: String,
+    pub reference_title: String,
     pub tags: Vec<String>,
 }
 

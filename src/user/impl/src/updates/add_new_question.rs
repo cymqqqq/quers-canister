@@ -15,6 +15,8 @@ fn add_new_question_impl(args: &Args, state: &mut RuntimeState) -> Response {
         &args.question_description,
         &args.question_image,    
         &args.question_asker,
+        &args.reference_link,
+        &args.reference_title,
         &args.tags,
     );
     Response::Success

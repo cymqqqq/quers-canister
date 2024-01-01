@@ -56,9 +56,9 @@ impl Data {
         }
     }
 
-    pub fn set_user_principal(&mut self, owner: &Principal) {
-        self.users.set_user_principal(&owner);
-    }
+    // pub fn set_user_principal(&mut self, owner: &Principal) {
+    //     self.users.set_user_principal(&owner);
+    // }
 
     pub fn update_user_description(&mut self, owner: &Principal, description: &String) {
         self.users.update_user_description(&owner, &description);
@@ -89,20 +89,20 @@ impl Data {
     }
 
     pub fn set_user_profile(&mut self, 
-        owner: &Principal,
+        owner: Principal,
         description: &String,
         name: &String,
         username: &String,
         profile_image_url: &String,
         ) {
         let profile = Profile::new(
-            *owner,
+            // *owner,
             description.to_string(),
             name.to_string(),
             username.to_string(),
             profile_image_url.to_string(),
         );
-        self.users.set_user_profile(profile);
+        self.users.set_user_profile(owner, profile);
     }
 
     pub fn get_all_question_list(&self) -> Vec<Question> {
@@ -119,6 +119,8 @@ impl Data {
         question_description: &String,
         question_image: &Option<String>,
         question_asker: &Principal,
+        reference_link: &String,
+        reference_title: &String,
         tags: &Vec<String>,
     ) {
         let q_id = new_qid();
@@ -139,6 +141,8 @@ impl Data {
                 q_logo,
                 q_image,
                 *question_asker,
+                reference_link.to_string(),
+                reference_title.to_string(),
                 tags.to_vec(),
         );
         self.users.update_user_question_id_list(&question_asker, &q_id);
@@ -283,6 +287,31 @@ impl Data {
         .iter()
         .map(|watch_list_id| self.get_question_by_id(watch_list_id))
         .collect()
+    }
+
+    // get user profile
+    pub fn get_user_profile(&self, owner: &Principal) -> Profile {
+        self.users.get_user_profile(owner)
+    } 
+
+    // get user followers set
+    pub fn get_profile_followers_set(&self, owner: &Principal) -> Vec<Profile> {
+        let followers_set = self.follow_state.get_followers_set(owner);
+        followers_set
+        .iter()
+        .map(|user_pid| self.get_user_profile(&Principal::from_text(user_pid).unwrap()))
+        .collect()
+
+    }
+    
+    // get user followings set
+    pub fn get_profile_followings_set(&self, owner: &Principal) -> Vec<Profile> {
+        let followings_set = self.follow_state.get_followings_set(owner);
+        followings_set
+        .iter()
+        .map(|user_pid| self.get_user_profile(&Principal::from_text(user_pid).unwrap()))
+        .collect()
+
     }
 
 }
