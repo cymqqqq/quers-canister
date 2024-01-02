@@ -79,7 +79,6 @@ impl HomePage {
 #[derive(Debug, Clone, CandidType, Serialize, Deserialize)]
 pub struct Question {
     pub question_id: String,
-    pub question_logo: String,
     pub question_title: String,
     pub question_description: String,
     pub question_date: String,
@@ -97,7 +96,6 @@ impl Default for Question {
     fn default() -> Self {
         Self {
             question_id: "".to_string(),
-            question_logo: "".to_string(),
             question_title: "".to_string(),
             question_description: "".to_string(),
             question_date: now_nanos().to_string(),
@@ -116,7 +114,6 @@ impl Question {
     pub fn new(question_id: &String,
                 question_title: String, 
                 question_description: String,
-                question_logo: String,
                 question_image: String,
                 question_asker: Principal,
                 reference_link: String,
@@ -125,7 +122,6 @@ impl Question {
     ) -> Self {
         Self {
             question_id: question_id.into(),
-            question_logo: question_logo,
             question_title: question_title,
             question_image: question_image,
             question_description: question_description,

@@ -10,7 +10,6 @@ fn add_new_question(args: Args) -> Response {
 
 fn add_new_question_impl(args: &Args, state: &mut RuntimeState) -> Response {
     state.data.add_question(
-        &args.question_logo,
         &args.question_title,
         &args.question_description,
         &args.question_image,    

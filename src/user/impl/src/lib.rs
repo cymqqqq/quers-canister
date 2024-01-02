@@ -114,7 +114,6 @@ impl Data {
     }
     
     pub fn add_question(&mut self,
-        question_logo: &Option<String>,
         question_title: &String,
         question_description: &String,
         question_image: &Option<String>,
@@ -124,10 +123,6 @@ impl Data {
         tags: &Vec<String>,
     ) {
         let q_id = new_qid();
-        let q_logo = match question_logo {
-            Some(logo) => logo.to_string(),
-            None => "".to_string(),
-        };
 
         let q_image = match question_image {
             Some(image) => image.to_string(),
@@ -138,7 +133,6 @@ impl Data {
             &q_id,
             question_title.to_string(),
                 question_description.to_string(),
-                q_logo,
                 q_image,
                 *question_asker,
                 reference_link.to_string(),
