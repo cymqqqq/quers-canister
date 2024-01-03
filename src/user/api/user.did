@@ -36,9 +36,9 @@ type Args_2 = record {
   question_title : text;
   question_asker : principal;
   question_description : text;
-  reference_link : text;
+  reference_link : opt text;
   tags : vec text;
-  reference_title : text;
+  reference_title : opt text;
   question_image : opt text;
 };
 type Args_20 = record { tvl : nat32; owner : principal };

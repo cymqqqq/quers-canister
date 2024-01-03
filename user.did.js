@@ -18,9 +18,9 @@ export const idlFactory = ({ IDL }) => {
     'question_title' : IDL.Text,
     'question_asker' : IDL.Principal,
     'question_description' : IDL.Text,
-    'reference_link' : IDL.Text,
+    'reference_link' : IDL.Opt(IDL.Text),
     'tags' : IDL.Vec(IDL.Text),
-    'reference_title' : IDL.Text,
+    'reference_title' : IDL.Opt(IDL.Text),
     'question_image' : IDL.Opt(IDL.Text),
   });
   const Response_1 = IDL.Variant({

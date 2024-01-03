@@ -30,8 +30,8 @@ desc="about GameFi, SocialFi, DeFi, Layer2"
 # question_description=\"$desc\"; \
 # tags=vec {\"GameFi, SocialFi, DeFi, Layer2\"}; \
 # question_image=opt \"\"; \
-# reference_link=\"www.baidu.com\"; \
-# reference_title=\"nothing\"; \
+# reference_link=opt \"www.baidu.com\"; \
+# reference_title=opt \"nothing\"; \
 # }"
 
 dfx canister --network ic call user get_all_question_list "record {}"
