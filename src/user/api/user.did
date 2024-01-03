@@ -35,7 +35,6 @@ type Args_19 = record { tickets : nat32; owner : principal };
 type Args_2 = record {
   question_title : text;
   question_asker : principal;
-  question_logo : opt text;
   question_description : text;
   reference_link : text;
   tags : vec text;
@@ -78,7 +77,6 @@ type Question = record {
   question_title : text;
   question_date : text;
   question_asker : text;
-  question_logo : text;
   question_description : text;
   reference_link : text;
   votes : nat32;

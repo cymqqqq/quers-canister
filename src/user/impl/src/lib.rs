@@ -118,11 +118,20 @@ impl Data {
         question_description: &String,
         question_image: &Option<String>,
         question_asker: &Principal,
-        reference_link: &String,
-        reference_title: &String,
+        reference_link: &Option<String>,
+        reference_title: &Option<String>,
         tags: &Vec<String>,
     ) {
         let q_id = new_qid();
+        let q_r_link = match reference_link {
+            Some(link) => link.to_string(),
+            None => "".to_string(),
+        };
+
+        let q_r_title = match reference_title {
+            Some(title) => title.to_string(),
+            None => "".to_string(),
+        };
 
         let q_image = match question_image {
             Some(image) => image.to_string(),
@@ -135,8 +144,8 @@ impl Data {
                 question_description.to_string(),
                 q_image,
                 *question_asker,
-                reference_link.to_string(),
-                reference_title.to_string(),
+                q_r_link,
+                q_r_title,
                 tags.to_vec(),
         );
         self.users.update_user_question_id_list(&question_asker, &q_id);
