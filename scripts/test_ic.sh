@@ -42,9 +42,9 @@ dfx canister --network ic call user get_all_question_list "record {}"
 # to_follow= principal \"$ICP\"; \
 # }"
 
-# dfx canister --network ic call user get_profile_followers_set \
-# "record {
-# owner= principal \"$ICP\"; \
-# }"
+dfx canister --network ic call user get_profile_followers_set \
+"record {
+owner= principal \"$ICP\"; \
+}"
 
 # http://bitask.club:3001/homepage/viewByPage?sort=1&page=72&limit=10 404 (Not Found)
