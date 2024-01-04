@@ -89,20 +89,20 @@ impl Data {
     }
 
     pub fn set_user_profile(&mut self, 
-        owner: Principal,
+        owner: &Principal,
         description: &String,
         name: &String,
         username: &String,
         profile_image_url: &String,
         ) {
         let profile = Profile::new(
-            // *owner,
+            owner.to_string(),
             description.to_string(),
             name.to_string(),
             username.to_string(),
             profile_image_url.to_string(),
         );
-        self.users.set_user_profile(owner, profile);
+        self.users.set_user_profile(*owner, profile);
     }
 
     pub fn get_all_question_list(&self) -> Vec<Question> {

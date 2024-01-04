@@ -21,7 +21,7 @@ pub fn new_qid() -> String {
 
 #[derive(Debug, Clone, Serialize, Deserialize, CandidType)]
 pub struct Profile {
-    // pub owner: String,
+    pub owner: String,
     pub tvl: u32,
     pub description: String,
     pub profile_image_url: String,
@@ -293,7 +293,7 @@ impl QuesAns {
 impl Default for Profile {
     fn default() -> Self {
         Self { 
-                //  owner: Principal::anonymous().to_string(), 
+                 owner: Principal::anonymous().to_string(), 
                  tvl: 0u32, 
                  description: "".into(), 
                  profile_image_url: "".into(),
@@ -311,14 +311,14 @@ impl Default for Profile {
 impl Profile {
     // update method
     pub fn new(
-        // owner: Principal, 
+        owner: String, 
         description: String, 
         name: String,
         username: String,
         profile_image_url: String,
     ) -> Self {
         Self {
-            // owner: owner.to_text(),
+            owner: owner,
             tvl: 0u32,
             description: description,
             profile_image_url: profile_image_url,

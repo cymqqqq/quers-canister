@@ -61,6 +61,7 @@ type Profile = record {
   tvl : nat32;
   tickets : nat32;
   username : text;
+  owner : text;
   qa_mod : QuesAns;
   name : text;
   description : text;

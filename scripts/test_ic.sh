@@ -24,15 +24,15 @@ desc="about GameFi, SocialFi, DeFi, Layer2"
 # dfx canister --network ic call user update_user_holding "(record {owner=principal \"$owner\"; holding=12;})"
 # dfx canister --network ic call user get_user_profile "(record {owner=principal \"$owner\";})"
 
-# dfx canister --network ic call user add_new_question \
-# "record {question_title=\"$question\"; \
-# question_asker= principal \"$owner\"; \
-# question_description=\"$desc\"; \
-# tags=vec {\"GameFi, SocialFi, DeFi, Layer2\"}; \
-# question_image=opt \"\"; \
-# reference_link=opt \"www.baidu.com\"; \
-# reference_title=opt \"nothing\"; \
-# }"
+dfx canister --network ic call user add_new_question \
+"record {question_title=\"$question\"; \
+question_asker= principal \"$owner\"; \
+question_description=\"$desc\"; \
+tags=vec {\"GameFi, SocialFi, DeFi, Layer2\"}; \
+question_image=opt \"https://bitask-1257106981.cos.ap-singapore.myqcloud.com/BitAsk-Image/098f6bcd4621d373cade4e832627b4f6.jpg\"; \
+reference_link=opt \"www.baidu.com\"; \
+reference_title=opt \"nothing\"; \
+}"
 
 dfx canister --network ic call user get_all_question_list "record {}"
 

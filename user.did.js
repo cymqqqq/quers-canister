@@ -102,6 +102,7 @@ export const idlFactory = ({ IDL }) => {
     'tvl' : IDL.Nat32,
     'tickets' : IDL.Nat32,
     'username' : IDL.Text,
+    'owner' : IDL.Text,
     'qa_mod' : QuesAns,
     'name' : IDL.Text,
     'description' : IDL.Text,
