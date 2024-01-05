@@ -316,7 +316,10 @@ impl Data {
         .collect()
 
     }
-
+    
+    pub fn check_profile_follow_status(&self, owner: &Principal, to: &Principal) -> FollowStatus {
+        self.follow_state.check_profile_follow_status(&owner, &to)
+    }
 }
 
 

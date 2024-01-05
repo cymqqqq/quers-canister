@@ -14,3 +14,4 @@ pub mod get_profile_answer_question_list;
 pub mod get_profile_watch_list;
 pub mod get_profile_followers_set;
 pub mod get_profile_followings_set;
+pub mod check_profile_follow_status;

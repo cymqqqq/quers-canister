@@ -424,6 +424,13 @@ impl Default for Follow {
 }
 
 
+#[derive(Debug, Clone, CandidType, Serialize, Deserialize)]
+pub enum FollowStatus {
+    FOLLOWED,
+    UN_FOLLOWED,
+    FOLLOWING,
+}
+
 impl Follow {
 
     pub fn get_followers_set(&self, owner: &Principal) -> HashSet<String> {
@@ -480,5 +487,15 @@ impl Follow {
 
     pub fn get_profile_following_counts(&self, owner: &Principal) -> usize {
         self.get_followings_set(&owner).len()
+    }
+
+    pub fn check_profile_follow_status(&self, owner: &Principal, to: &Principal) -> FollowStatus {
+        if self.get_followers_set(&owner).contains(&to.to_string()) {
+            FollowStatus::FOLLOWED
+        } else if self.get_followings_set(&owner).contains(&to.to_string()) {
+            FollowStatus::FOLLOWING
+        } else {
+            FollowStatus::UN_FOLLOWED
+        }
     }
 }

@@ -46,6 +46,7 @@ fn main() {
     // get profile follow state
     generate_candid_method!(user, get_profile_followers_set, query);
     generate_candid_method!(user, get_profile_followings_set, query);
+    generate_candid_method!(user, check_profile_follow_status, query);
     candid::export_service!();
     std::print!("{}", __export_service());
 }
