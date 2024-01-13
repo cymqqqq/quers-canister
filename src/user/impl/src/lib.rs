@@ -115,14 +115,23 @@ impl Data {
     
     pub fn add_question(&mut self,
         question_title: &String,
-        question_description: &String,
+        question_description: &Option<String>,
         question_image: &Option<String>,
         question_asker: &Principal,
         reference_link: &Option<String>,
         reference_title: &Option<String>,
-        tags: &Vec<String>,
+        tags: &Option<Vec<String>>,
     ) {
         let q_id = new_qid();
+        let q_desc = match question_description {
+            Some(description) => description.to_string(),
+            None => "No description".to_string(),
+        };
+
+        let q_tags = match tags {
+            Some(tags) => tags.to_vec(),
+            None => vec![],
+        };
         let q_r_link = match reference_link {
             Some(link) => link.to_string(),
             None => "".to_string(),
@@ -141,12 +150,12 @@ impl Data {
         let question_obj = Question::new(
             &q_id,
             question_title.to_string(),
-                question_description.to_string(),
+                q_desc,
                 q_image,
                 *question_asker,
                 q_r_link,
                 q_r_title,
-                tags.to_vec(),
+                q_tags,
         );
         self.users.update_user_question_id_list(&question_asker, &q_id);
         self.homepage.ask_question(&q_id, question_obj);
