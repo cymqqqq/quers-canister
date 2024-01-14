@@ -5,3 +5,4 @@ pub mod raw_rand;
 pub mod types;
 pub mod serializer;
 pub mod stable_memory;
+pub mod token_identifier;

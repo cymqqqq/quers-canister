@@ -1,15 +1,16 @@
 use candid::{CandidType, Principal};
 use serde::{Deserialize, Serialize};
-use std::sync::atomic::{self, AtomicU16};
+use std::sync::atomic::{self, AtomicU32};
 use std::collections::{HashMap, HashSet};
 use crate::env::{
     TimestampNanos,
 };
 use crate::time::{now_nanos};
+use crate::token_identifier::*;
 #[derive(CandidType, Serialize, Deserialize, Clone, Debug, Default)]
 pub struct Empty {}
 
-static QID: AtomicU16 = AtomicU16::new(0);
+static QID: AtomicU32 = AtomicU32::new(0);
 // generate new question id
 pub fn new_qid() -> String {
     let cid = ic_cdk::api::id();
@@ -18,7 +19,13 @@ pub fn new_qid() -> String {
     format!("{}-{}", cid.to_text(), qid + 1)
 }
 
-
+pub fn new_encode_qid() -> TokenIdentifier {
+    let cid = CanisterId(ic_cdk::api::id());
+    
+    let qid = QID.fetch_add(1, atomic::Ordering::SeqCst);
+    let token_index = TokenIndex(qid.into());
+    encode_token_id(cid, token_index)
+}
 #[derive(Debug, Clone, Serialize, Deserialize, CandidType)]
 pub struct Profile {
     pub owner: String,

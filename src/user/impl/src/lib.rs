@@ -7,7 +7,7 @@ use serde::{ Serialize};
 // use std::collections::{HashMap, HashSet};
 use utils::env::Environment;
 use utils::types::*;
-use utils::types::{new_qid};
+use utils::types::{new_encode_qid};
 // use utils::time::DAY_IN_MS;
 pub mod lifecycle;
 pub mod guards;
@@ -123,7 +123,7 @@ impl Data {
         tags: &Option<Vec<String>>,
         lang: &String,
     ) {
-        let q_id = new_qid();
+        let q_id = new_encode_qid();
         let q_desc = match question_description {
             Some(description) => description.to_string(),
             None => "No description".to_string(),
