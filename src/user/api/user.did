@@ -35,9 +35,10 @@ type Args_19 = record { owner : principal; holding : nat32 };
 type Args_2 = record {
   question_title : text;
   question_asker : principal;
-  question_description : text;
+  question_description : opt text;
   reference_link : opt text;
-  tags : vec text;
+  lang : text;
+  tags : opt vec text;
   reference_title : opt text;
   question_image : opt text;
 };

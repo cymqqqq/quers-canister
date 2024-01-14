@@ -10,6 +10,7 @@ pub struct Args {
     pub reference_link: Option<String>,
     pub reference_title: Option<String>,
     pub tags: Option<Vec<String>>,
+    pub lang: String,
 }
 
 #[derive(CandidType, Serialize, Deserialize, Debug)]

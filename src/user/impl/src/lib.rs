@@ -121,6 +121,7 @@ impl Data {
         reference_link: &Option<String>,
         reference_title: &Option<String>,
         tags: &Option<Vec<String>>,
+        lang: &String,
     ) {
         let q_id = new_qid();
         let q_desc = match question_description {
@@ -157,8 +158,9 @@ impl Data {
                 q_r_title,
                 q_tags,
         );
+
         self.users.update_user_question_id_list(&question_asker, &q_id);
-        self.homepage.ask_question(&q_id, question_obj);
+        self.homepage.ask_question(&q_id, question_obj, lang.to_string());
     }
 
     pub fn add_profile_watch_list(&mut self, user: &Principal, question_id: &String) {

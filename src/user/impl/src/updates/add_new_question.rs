@@ -17,6 +17,7 @@ fn add_new_question_impl(args: &Args, state: &mut RuntimeState) -> Response {
         &args.reference_link,
         &args.reference_title,
         &args.tags,
+        &args.lang
     );
     Response::Success
 }

@@ -36,23 +36,43 @@ pub struct Profile {
 #[derive(Debug, Clone, CandidType, Serialize, Deserialize)]
 pub struct HomePage {
     pub question_list: HashMap<String, Question>,
+    pub cn_question_list: HashMap<String, Question>,
 }
 
 impl Default for HomePage {
     fn default() -> Self {
         Self {
             question_list: HashMap::new(),
+            cn_question_list: HashMap::new(),
         }
     }
 }
 
 impl HomePage {
-    pub fn ask_question(&mut self, 
+    pub fn ask_en_question(&mut self, 
         question_id: &String,
         question: Question,
     ) {
-        self.question_list.insert(question_id.into(), question);
+        self.question_list.insert(question_id.to_string(), question);
+    }
 
+    pub fn ask_cn_question(&mut self,
+        question_id: &String,
+        question: Question,
+    ) {
+        self.cn_question_list.insert(question_id.to_string(), question);
+    }
+
+    pub fn ask_question(&mut self, 
+        question_id: &String,
+        question: Question,
+        lang: String,
+    ) {
+        match lang.as_str() {
+            "en" => self.ask_en_question(question_id, question),
+            "cn" => self.ask_cn_question(question_id, question),
+            _ => println!("question language is required"),
+        };
     }
     
     pub fn get_all_question_list(&self) -> Vec<Question> {
