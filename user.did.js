@@ -17,9 +17,10 @@ export const idlFactory = ({ IDL }) => {
   const Args_2 = IDL.Record({
     'question_title' : IDL.Text,
     'question_asker' : IDL.Principal,
-    'question_description' : IDL.Text,
+    'question_description' : IDL.Opt(IDL.Text),
     'reference_link' : IDL.Opt(IDL.Text),
-    'tags' : IDL.Vec(IDL.Text),
+    'lang' : IDL.Text,
+    'tags' : IDL.Opt(IDL.Vec(IDL.Text)),
     'reference_title' : IDL.Opt(IDL.Text),
     'question_image' : IDL.Opt(IDL.Text),
   });

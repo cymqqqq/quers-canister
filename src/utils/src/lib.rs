@@ -6,3 +6,4 @@ pub mod types;
 pub mod serializer;
 pub mod stable_memory;
 pub mod token_identifier;
+pub mod register;
